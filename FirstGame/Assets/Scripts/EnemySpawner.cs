@@ -15,12 +15,21 @@ public class EnemySpawner : MonoBehaviour
 
     private Transform target;
 
+    private float despawnDistance;
+
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
+
+    public int checkPerFrame;//需要检查的敌人数量
+    private int enemyToCheck;//需要检查的敌人索引
+
     // Start is called before the first frame update
     void Start()
     {
         spawnerCounter = timeToSpawn;
 
         target = PlayerHealthController.instance.transform;//让健康系统找到玩家位置，性能更高
+
+        despawnDistance = Vector3.Distance(transform.position,maxSpawn.position) + 4f;//消失距离比生成距离远一点
     }
 
     // Update is called once per frame
@@ -33,10 +42,42 @@ public class EnemySpawner : MonoBehaviour
 
             //Instantiate(enemyToSpawn,transform.position,transform.rotation);
 
-            Instantiate(enemyToSpawn,SelectSpawnPoint(),transform.rotation);
+            GameObject newEnemy = Instantiate(enemyToSpawn,SelectSpawnPoint(),transform.rotation);
+
+            spawnedEnemies.Add(newEnemy);
         }
 
         transform.position = target.position;
+
+        int  checkTarget = enemyToCheck + checkPerFrame;//检查结束？
+
+        while(enemyToCheck < checkTarget)//没到结束
+        {
+            if(enemyToCheck < spawnedEnemies.Count)//需要检查的怪物数小于总怪物数
+            {
+                if(spawnedEnemies[enemyToCheck] != null)
+                {
+                    if(Vector3.Distance(transform.position,spawnedEnemies[enemyToCheck].transform.position) > despawnDistance)
+                    {
+                        Destroy(spawnedEnemies[enemyToCheck]);
+
+                        spawnedEnemies.RemoveAt(enemyToCheck);
+                        checkTarget--;
+                    } else
+                    {
+                        enemyToCheck++;
+                    }
+                } else//如果列表中元素为空
+                {
+                    spawnedEnemies.RemoveAt(enemyToCheck);
+                    checkTarget --;//去掉空的那个
+                }
+            } else 
+            {
+                enemyToCheck = 0;
+                checkTarget = 0;
+            }
+        }
     }
 
     public Vector3 SelectSpawnPoint()
