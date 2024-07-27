@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
 
     private List<GameObject> spawnedEnemies = new List<GameObject>();
 
-    public int checkPerFrame;//需要检查的敌人数量
+    public int checkPerFrame;//每一帧需要检查的敌人数量
     private int enemyToCheck;//需要检查的敌人索引
 
     // Start is called before the first frame update
@@ -42,9 +42,9 @@ public class EnemySpawner : MonoBehaviour
 
             //Instantiate(enemyToSpawn,transform.position,transform.rotation);
 
-            GameObject newEnemy = Instantiate(enemyToSpawn,SelectSpawnPoint(),transform.rotation);
+            GameObject newEnemy = Instantiate(enemyToSpawn,SelectSpawnPoint(),transform.rotation);//生成新的敌人
 
-            spawnedEnemies.Add(newEnemy);
+            spawnedEnemies.Add(newEnemy);//添加到列表中
         }
 
         transform.position = target.position;
@@ -55,22 +55,22 @@ public class EnemySpawner : MonoBehaviour
         {
             if(enemyToCheck < spawnedEnemies.Count)//需要检查的怪物数小于总怪物数
             {
-                if(spawnedEnemies[enemyToCheck] != null)
+                if(spawnedEnemies[enemyToCheck] != null)//有怪物
                 {
-                    if(Vector3.Distance(transform.position,spawnedEnemies[enemyToCheck].transform.position) > despawnDistance)
+                    if(Vector3.Distance(transform.position,spawnedEnemies[enemyToCheck].transform.position) > despawnDistance)//超出消失距离
                     {
-                        Destroy(spawnedEnemies[enemyToCheck]);
+                        Destroy(spawnedEnemies[enemyToCheck]);//销毁
 
-                        spawnedEnemies.RemoveAt(enemyToCheck);
-                        checkTarget--;
+                        spawnedEnemies.RemoveAt(enemyToCheck);//从列表中去掉
+                        checkTarget--;//索引减一
                     } else
                     {
-                        enemyToCheck++;
+                        enemyToCheck++;//判断下一个怪物
                     }
                 } else//如果列表中元素为空
                 {
-                    spawnedEnemies.RemoveAt(enemyToCheck);
-                    checkTarget --;//去掉空的那个
+                    spawnedEnemies.RemoveAt(enemyToCheck);//去掉空的那个
+                    checkTarget --;//索引减一
                 }
             } else 
             {

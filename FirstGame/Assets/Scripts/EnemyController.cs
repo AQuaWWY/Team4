@@ -10,11 +10,13 @@ public class EnemyController : MonoBehaviour
     public float damage;
     public float hitWaitTime = 1f;//受击间隔
     private float hitCounter;//用于倒计时
+    public float health = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = FindAnyObjectByType<PlayerController>().transform;
+        //target = FindAnyObjectByType<PlayerController>().transform;//让每个敌人都搜索一次玩家的位置
+        target = PlayerHealthController.instance.transform;//让健康系统找到玩家位置，性能更高
     }
 
     // Update is called once per frame
@@ -36,6 +38,16 @@ public class EnemyController : MonoBehaviour
             PlayerHealthController.instance.TakeDamage(damage);
 
             hitCounter = hitWaitTime;
+        }
+    }
+
+    public void TakeDamage(float damageToTake)
+    {
+        health -= damageToTake;
+
+        if(health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
