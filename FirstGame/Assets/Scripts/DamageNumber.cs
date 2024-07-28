@@ -24,7 +24,9 @@ public class DamageNumber : MonoBehaviour
 
             if(lifeCounter <= 0)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+
+                DamageNumberController.instance.PlaceToPool(this);
             }
         }
 
