@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -12,6 +14,9 @@ public class EnemyController : MonoBehaviour
     private float hitCounter;//用于倒计时
     public float health = 5f;
 
+    public float knockBackTime = 0.5f;//击退时间
+    private float knockBackCounter;//用于倒计时
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +27,21 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(knockBackCounter > 0)
+        {
+            knockBackCounter -= Time.deltaTime;
+
+            if(moveSpeed > 0)
+            {
+                moveSpeed = -moveSpeed * 2f;
+            }
+
+            if(knockBackCounter <= 0)
+            {
+                moveSpeed = Math.Abs(moveSpeed * 0.5f);
+            }
+        }
+
         theRB.velocity = (target.position - transform.position).normalized * moveSpeed;//设置敌人移动的向量
         //normalize使向量的大小化为之前设计好的长度1
         if(hitCounter > 0)
@@ -48,6 +68,18 @@ public class EnemyController : MonoBehaviour
         if(health <= 0)
         {
             Destroy(gameObject);
+        }
+
+        DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);//生成伤害数字
+    }
+
+    public void TakeDamage(float damageToTake, bool shouldKnockBack)
+    {
+        TakeDamage(damageToTake);
+
+        if(shouldKnockBack)
+        {
+            knockBackCounter = knockBackTime;
         }
     }
 }

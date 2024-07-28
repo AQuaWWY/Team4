@@ -9,6 +9,7 @@ public class EnemyDamager : MonoBehaviour
 
     public float lifeTime,growSpeed = 5f;//生命周期,生长速度
     private Vector3 targetSize;//目标大小
+    public bool shouldKnockBack;//是否击退
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,7 @@ public class EnemyDamager : MonoBehaviour
     {
         if(collision.tag == "Enemy")//如果碰撞到的是敌人
         {
-            collision.GetComponent<EnemyController>().TakeDamage(damageAmount);//调用敌人的受伤函数
+            collision.GetComponent<EnemyController>().TakeDamage(damageAmount,shouldKnockBack);//调用敌人的受伤函数
         }
     }
 }
