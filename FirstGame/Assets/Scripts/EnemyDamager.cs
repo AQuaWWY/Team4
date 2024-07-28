@@ -11,6 +11,8 @@ public class EnemyDamager : MonoBehaviour
     private Vector3 targetSize;//目标大小
     public bool shouldKnockBack;//是否击退
 
+    public bool destroyParent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,11 @@ public class EnemyDamager : MonoBehaviour
             if(transform.localScale.x == 0f)//物体大小为0
             {
                 Destroy(gameObject);//销毁物体
+
+                if(destroyParent)//销毁父物体
+                {
+                    Destroy(transform.parent.gameObject);
+                }
             }
         }
     }
