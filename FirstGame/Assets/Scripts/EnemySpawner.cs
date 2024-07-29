@@ -35,9 +35,9 @@ public class EnemySpawner : MonoBehaviour
 
         target = PlayerHealthController.instance.transform;//让健康系统找到玩家位置，性能更高
 
-        despawnDistance = Vector3.Distance(transform.position,maxSpawn.position) + 4f;//消失距离比生成距离远一点
+        despawnDistance = Vector3.Distance(transform.position,maxSpawn.position) + 4f;//设置消失距离：消失距离比生成距离远一点
 
-        currentWave = -1;
+        currentWave = -1;//-1，未开始
         GoToNextWave();
     }
 
@@ -61,16 +61,16 @@ public class EnemySpawner : MonoBehaviour
         {
             if(currentWave < waves.Count)//未遍历所有波数
             {
-                waveCounter -= Time.deltaTime;//波数计数器递减
+                waveCounter -= Time.deltaTime;//波数计时器递减直0
                 if(waveCounter <= 0)
                 {
-                    GoToNextWave();
+                    GoToNextWave();//下一波
                 }
 
-                spawnCounter -= Time.deltaTime;
+                spawnCounter -= Time.deltaTime;//生成计时器递减直0
                 if(spawnCounter <= 0)
                 {
-                    spawnCounter = waves[currentWave].timeBetweenSpawns;
+                    spawnCounter = waves[currentWave].timeBetweenSpawns;//重置生成计时器为设定好的时间间隔
 
                     GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn,SelectSpawnPoint(),Quaternion.identity);//生成新的敌人
                 
@@ -79,11 +79,11 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        transform.position = target.position;
+        transform.position = target.position;//敌人生成器位置跟随玩家位置
 
-        int  checkTarget = enemyToCheck + checkPerFrame;//检查结束？
+        int  checkTarget = enemyToCheck + checkPerFrame;//当前帧需要检查到的怪物索引数
 
-        while(enemyToCheck < checkTarget)//没到结束
+        while(enemyToCheck < checkTarget)//没到结束，继续检查是否有怪物超出消失距离，有则销毁
         {
             if(enemyToCheck < spawnedEnemies.Count)//需要检查的怪物数小于总怪物数
             {
@@ -95,16 +95,19 @@ public class EnemySpawner : MonoBehaviour
 
                         spawnedEnemies.RemoveAt(enemyToCheck);//从列表中去掉
                         checkTarget--;//索引减一
-                    } else
+                    } 
+                    else//索引加一
                     {
                         enemyToCheck++;//判断下一个怪物
                     }
-                } else//如果列表中元素为空
+                } 
+                else//如果列表中元素为空
                 {
                     spawnedEnemies.RemoveAt(enemyToCheck);//去掉空的那个
                     checkTarget --;//索引减一
                 }
-            } else 
+            } 
+            else //防止错误
             {
                 enemyToCheck = 0;
                 checkTarget = 0;
@@ -112,7 +115,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public Vector3 SelectSpawnPoint()
+    public Vector3 SelectSpawnPoint()//生成地点随机函数
     {
         Vector3 spawnPoint = Vector3.zero;
 
@@ -144,21 +147,21 @@ public class EnemySpawner : MonoBehaviour
         return spawnPoint;
     }
 
-    public void GoToNextWave()
+    public void GoToNextWave()//重置下一波的参数：波数计时器和生成计时器
     {
-        currentWave++;
+        currentWave++;//当前波数索引加一
         if(currentWave >= waves.Count)//如果遍历到最后，甚至溢出列表，回到最后一波
         {
             currentWave = waves.Count - 1;
         }
 
-        waveCounter = waves[currentWave].waveLength;
-        spawnCounter = waves[currentWave].timeBetweenSpawns;
+        waveCounter = waves[currentWave].waveLength;//持续十秒的倒计时
+        spawnCounter = waves[currentWave].timeBetweenSpawns;//一秒的怪物生成间隔
     }
 }
 
 [System.Serializable]//标签，使类可序列化，展示在Inspector中
-public class WaveInfo
+public class WaveInfo//波数信息类，包含生成的敌人类型和波数持续时间，敌人生成间隔
 {
     public GameObject enemyToSpawn;
     public float waveLength = 10f;
