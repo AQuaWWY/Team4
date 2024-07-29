@@ -13,6 +13,8 @@ public class ExperienceLevelController : MonoBehaviour
 
     public int currentExperience;
 
+    public ExpPickup pickup;//在inspector中填经验预制体
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,5 +30,10 @@ public class ExperienceLevelController : MonoBehaviour
     public void GetExp(int amountToGet)
     {
         currentExperience += amountToGet;
+    }
+
+    public void SpawnExp(Vector3 position,int expValue)
+    {
+        Instantiate(pickup,position,Quaternion.identity).expValue = expValue;//实例化预制体，方位，不旋转,将掉落的经验值设置为怪物自带的预设
     }
 }

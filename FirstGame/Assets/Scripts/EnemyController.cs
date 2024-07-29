@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
     public float knockBackTime = 0.5f;//击退时间
     private float knockBackCounter;//用于倒计时
 
+    public int expToGive = 1;//敌人死亡后给予的经验值
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +70,8 @@ public class EnemyController : MonoBehaviour
         if(health <= 0)
         {
             Destroy(gameObject);
+
+            ExperienceLevelController.instance.SpawnExp(transform.position,expToGive);//生成在敌人死亡位置,获取需要掉落的经验数量
         }
 
         DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);//生成伤害数字
