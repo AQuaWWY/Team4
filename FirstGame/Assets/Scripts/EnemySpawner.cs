@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyToSpawn;
 
     public float timeToSpawn;
-    private float spawnerCounter;
+    private float spawnCounter;
 
     public Transform minSpawn,maxSpawn;
 
@@ -22,20 +22,30 @@ public class EnemySpawner : MonoBehaviour
     public int checkPerFrame;//每一帧需要检查的敌人数量
     private int enemyToCheck;//需要检查的敌人索引
 
+    public List<WaveInfo> waves;//将波数类型的数据存储在列表中
+
+    private int currentWave;//当前波数
+
+    private float waveCounter;//波数持续时间计时器
+
     // Start is called before the first frame update
     void Start()
     {
-        spawnerCounter = timeToSpawn;
+        spawnCounter = timeToSpawn;
 
         target = PlayerHealthController.instance.transform;//让健康系统找到玩家位置，性能更高
 
         despawnDistance = Vector3.Distance(transform.position,maxSpawn.position) + 4f;//消失距离比生成距离远一点
+
+        currentWave = -1;
+        GoToNextWave();
     }
 
     // Update is called once per frame
     void Update()
     {
-        spawnerCounter -= Time.deltaTime;
+        //每帧减少计时器spawnerCounter，当计时器小于等于0时，重置计时器并在指定位置生成一个新的敌人对象，然后将该敌人添加到spawnedEnemies列表中进行管理。
+        /* spawnerCounter -= Time.deltaTime;
         if(spawnerCounter <= 0)
         {
             spawnerCounter = timeToSpawn;
@@ -45,6 +55,28 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyToSpawn,SelectSpawnPoint(),transform.rotation);//生成新的敌人
 
             spawnedEnemies.Add(newEnemy);//添加到列表中
+        } */
+
+        if(PlayerHealthController.instance.gameObject.activeSelf)//如果玩家处于激活状态（存活）
+        {
+            if(currentWave < waves.Count)//未遍历所有波数
+            {
+                waveCounter -= Time.deltaTime;//波数计数器递减
+                if(waveCounter <= 0)
+                {
+                    GoToNextWave();
+                }
+
+                spawnCounter -= Time.deltaTime;
+                if(spawnCounter <= 0)
+                {
+                    spawnCounter = waves[currentWave].timeBetweenSpawns;
+
+                    GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn,SelectSpawnPoint(),Quaternion.identity);//生成新的敌人
+                
+                    spawnedEnemies.Add(newEnemy);//添加到列表中
+                }
+            }
         }
 
         transform.position = target.position;
@@ -111,4 +143,26 @@ public class EnemySpawner : MonoBehaviour
 
         return spawnPoint;
     }
+
+    public void GoToNextWave()
+    {
+        currentWave++;
+        if(currentWave >= waves.Count)//如果遍历到最后，甚至溢出列表，回到最后一波
+        {
+            currentWave = waves.Count - 1;
+        }
+
+        waveCounter = waves[currentWave].waveLength;
+        spawnCounter = waves[currentWave].timeBetweenSpawns;
+    }
+}
+
+[System.Serializable]//标签，使类可序列化，展示在Inspector中
+public class WaveInfo
+{
+    public GameObject enemyToSpawn;
+    public float waveLength = 10f;
+    public float timeBetweenSpawns = 1f;
+
+
 }
