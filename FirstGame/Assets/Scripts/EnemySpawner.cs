@@ -62,13 +62,15 @@ public class EnemySpawner : MonoBehaviour
             if(currentWave < waves.Count)//未遍历所有波数
             {
                 waveCounter -= Time.deltaTime;//波数计时器递减直0
-                if(waveCounter <= 0)
+
+                if(waveCounter <= 0)//当计时器减到0才会进入下一波
                 {
                     GoToNextWave();//下一波
                 }
 
                 spawnCounter -= Time.deltaTime;//生成计时器递减直0
-                if(spawnCounter <= 0)
+
+                if(spawnCounter <= 0)//生成计时器减到0，生成新的敌人
                 {
                     spawnCounter = waves[currentWave].timeBetweenSpawns;//重置生成计时器为设定好的时间间隔
 
