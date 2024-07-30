@@ -41,6 +41,8 @@ public class ExperienceLevelController : MonoBehaviour
         {
             LevelUp();
         }
+
+        UIController.instance.UpDateExperience(currentExperience,expLevels[currentLevel],currentLevel);//更新UI
     }
 
     public void SpawnExp(Vector3 position,int expValue)

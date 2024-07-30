@@ -115,6 +115,7 @@ MonoBehaviour:
   hitWaitTime: 1
   health: 10
   knockBackTime: 0.5
+  expToGive: 3
 --- !u!1 &7653576253362734543
 GameObject:
   m_ObjectHideFlags: 0

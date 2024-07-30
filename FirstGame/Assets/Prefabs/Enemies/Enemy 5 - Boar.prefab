@@ -199,3 +199,4 @@ MonoBehaviour:
   hitWaitTime: 1
   health: 15
   knockBackTime: 0.5
+  expToGive: 5
