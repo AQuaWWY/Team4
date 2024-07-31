@@ -10,6 +10,8 @@ public class Weapon : MonoBehaviour
     [HideInInspector]//在侧边栏中隐藏
     public bool statsUpdated;
 
+    public Sprite icon;
+
     public void LevelUp()//升级时调用
     {
         if (weaponLevel <= stats.Count - 1)//武器升级
@@ -25,6 +27,5 @@ public class Weapon : MonoBehaviour
 public class WeaponStats
 {
     public float speed, damage, range, timeBetweenAttacks, amount, duration;
-
-
+    public string upgradeText;
 }

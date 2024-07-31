@@ -18,6 +18,8 @@ public class SpinWeapon : Weapon//继承自Weapon类
     void Start()
     {
         SetStats();
+
+        //UIController.instance.levelUpButtons[0].UpdateButtonDisplay(this);
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class SpinWeapon : Weapon//继承自Weapon类
     {
         //holder.rotation = Quaternion.Euler(0f, 0f, holder.rotation.eulerAngles.z + rotateSpeed * Time.deltaTime);//只有z轴旋转
 
-        holder.rotation = Quaternion.Euler(0f, 0f, holder.rotation.eulerAngles.z + rotateSpeed * Time.deltaTime * stats[weaponLevel].speed);//只有z轴旋转
+        holder.rotation = Quaternion.Euler(0f, 0f, holder.rotation.eulerAngles.z + (rotateSpeed * Time.deltaTime * stats[weaponLevel].speed));//只有z轴旋转
 
         spawnCounter -= Time.deltaTime;//一段时间后生成火球
         if (spawnCounter <= 0)

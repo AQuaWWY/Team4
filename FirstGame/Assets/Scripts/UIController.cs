@@ -15,6 +15,10 @@ public class UIController : MonoBehaviour
     public Slider expLvlSlider;//经验条
     public TMP_Text expLvlText;//经验值文本
 
+    public LevelUpSelectionButton[] levelUpButtons;//不会改变
+
+    public GameObject levelUpPanel;//升级面板
+
     // Start is called before the first frame update
     void Start()
     {

@@ -61,6 +61,12 @@ public class ExperienceLevelController : MonoBehaviour
             currentLevel = expLevels.Count - 1;
         }
 
-        PlayerController.instance.activeWeapon.LevelUp();//将等级升级与武器升级链接在一起
+        //PlayerController.instance.activeWeapon.LevelUp();//将等级升级与武器升级链接在一起
+
+        UIController.instance.levelUpPanel.SetActive(true);
+
+        Time.timeScale = 0f;
+
+        UIController.instance.levelUpButtons[0].UpdateButtonDisplay(PlayerController.instance.activeWeapon);
     }
 }
