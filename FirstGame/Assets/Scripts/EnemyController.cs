@@ -29,16 +29,16 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(knockBackCounter > 0)
+        if (knockBackCounter > 0)
         {
             knockBackCounter -= Time.deltaTime;
 
-            if(moveSpeed > 0)
+            if (moveSpeed > 0)
             {
                 moveSpeed = -moveSpeed * 2f;
             }
 
-            if(knockBackCounter <= 0)
+            if (knockBackCounter <= 0)
             {
                 moveSpeed = Math.Abs(moveSpeed * 0.5f);
             }
@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour
 
         theRB.velocity = (target.position - transform.position).normalized * moveSpeed;//设置敌人移动的向量
         //normalize使向量的大小化为之前设计好的长度1
-        if(hitCounter > 0)
+        if (hitCounter > 0)
         {
             hitCounter -= Time.deltaTime;
         }
@@ -55,7 +55,7 @@ public class EnemyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) //触发when两个collider碰撞
     {
         //1.将player加入tag，函数发现敌人碰撞到对应tag的时候执行
-        if(collision.gameObject.tag == "Player" && hitCounter <= 0f)
+        if (collision.gameObject.tag == "Player" && hitCounter <= 0f)
         {
             PlayerHealthController.instance.TakeDamage(damage);
 
@@ -67,11 +67,11 @@ public class EnemyController : MonoBehaviour
     {
         health -= damageToTake;
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
 
-            ExperienceLevelController.instance.SpawnExp(transform.position,expToGive);//生成在敌人死亡位置,获取需要掉落的经验数量
+            ExperienceLevelController.instance.SpawnExp(transform.position, expToGive);//生成在敌人死亡位置,获取需要掉落的经验数量
         }
 
         DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);//生成伤害数字
@@ -81,7 +81,7 @@ public class EnemyController : MonoBehaviour
     {
         TakeDamage(damageToTake);
 
-        if(shouldKnockBack)
+        if (shouldKnockBack)
         {
             knockBackCounter = knockBackTime;
         }

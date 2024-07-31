@@ -15,6 +15,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame after other objects update
     void LateUpdate()
     {
-        transform.position = new Vector3(target.position.x,target.position.y,transform.position.z);//只有x和y跟随玩家位置
+        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);//只有x和y跟随玩家位置
     }
 }

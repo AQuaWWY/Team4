@@ -21,7 +21,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         //设置总血量和当前血量
         currentHealth = maxHealth;
-        
+
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
     }
@@ -39,7 +39,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         currentHealth -= damageToTake;
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             gameObject.SetActive(false);//deactivate the player
         }

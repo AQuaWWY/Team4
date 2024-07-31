@@ -19,19 +19,19 @@ public class DamageNumberController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
         {
-            SpawnDamage(57f, new Vector3(4,3,0));
+            SpawnDamage(57f, new Vector3(4, 3, 0));
         }
     }
 
-    public void SpawnDamage(float damageAmount,Vector3 location)
+    public void SpawnDamage(float damageAmount, Vector3 location)
     {
         int rounded = Mathf.RoundToInt(damageAmount);//四舍五入
 
@@ -49,10 +49,12 @@ public class DamageNumberController : MonoBehaviour
     {
         DamageNumber numberToOutput = null;
 
-        if(numberPool.Count == 0)
+        if (numberPool.Count == 0)
         {
-            numberToOutput = Instantiate(numberToSpawn,numberCanvas);
-        } else {
+            numberToOutput = Instantiate(numberToSpawn, numberCanvas);
+        }
+        else
+        {
             numberToOutput = numberPool[0];
             numberPool.RemoveAt(0);
         }

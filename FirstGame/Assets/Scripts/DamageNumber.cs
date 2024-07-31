@@ -16,13 +16,13 @@ public class DamageNumber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
-        if(lifeCounter > 0)
+
+        if (lifeCounter > 0)
         {
             lifeCounter -= Time.deltaTime;
 
-            if(lifeCounter <= 0)
+            if (lifeCounter <= 0)
             {
                 //Destroy(gameObject);
 

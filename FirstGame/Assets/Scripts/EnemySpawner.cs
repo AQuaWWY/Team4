@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public float timeToSpawn;
     private float spawnCounter;
 
-    public Transform minSpawn,maxSpawn;
+    public Transform minSpawn, maxSpawn;
 
     private Transform target;
 
@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
 
         target = PlayerHealthController.instance.transform;//让健康系统找到玩家位置，性能更高
 
-        despawnDistance = Vector3.Distance(transform.position,maxSpawn.position) + 4f;//设置消失距离：消失距离比生成距离远一点
+        despawnDistance = Vector3.Distance(transform.position, maxSpawn.position) + 4f;//设置消失距离：消失距离比生成距离远一点
 
         currentWave = -1;//-1，未开始
         GoToNextWave();
@@ -57,25 +57,25 @@ public class EnemySpawner : MonoBehaviour
             spawnedEnemies.Add(newEnemy);//添加到列表中
         } */
 
-        if(PlayerHealthController.instance.gameObject.activeSelf)//如果玩家处于激活状态（存活）
+        if (PlayerHealthController.instance.gameObject.activeSelf)//如果玩家处于激活状态（存活）
         {
-            if(currentWave < waves.Count)//未遍历所有波数
+            if (currentWave < waves.Count)//未遍历所有波数
             {
                 waveCounter -= Time.deltaTime;//波数计时器递减直0
 
-                if(waveCounter <= 0)//当计时器减到0才会进入下一波
+                if (waveCounter <= 0)//当计时器减到0才会进入下一波
                 {
                     GoToNextWave();//下一波
                 }
 
                 spawnCounter -= Time.deltaTime;//生成计时器递减直0
 
-                if(spawnCounter <= 0)//生成计时器减到0，生成新的敌人
+                if (spawnCounter <= 0)//生成计时器减到0，生成新的敌人
                 {
                     spawnCounter = waves[currentWave].timeBetweenSpawns;//重置生成计时器为设定好的时间间隔
 
-                    GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn,SelectSpawnPoint(),Quaternion.identity);//生成新的敌人
-                
+                    GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SelectSpawnPoint(), Quaternion.identity);//生成新的敌人
+
                     spawnedEnemies.Add(newEnemy);//添加到列表中
                 }
             }
@@ -83,32 +83,32 @@ public class EnemySpawner : MonoBehaviour
 
         transform.position = target.position;//敌人生成器位置跟随玩家位置
 
-        int  checkTarget = enemyToCheck + checkPerFrame;//当前帧需要检查到的怪物索引数
+        int checkTarget = enemyToCheck + checkPerFrame;//当前帧需要检查到的怪物索引数
 
-        while(enemyToCheck < checkTarget)//没到结束，继续检查是否有怪物超出消失距离，有则销毁
+        while (enemyToCheck < checkTarget)//没到结束，继续检查是否有怪物超出消失距离，有则销毁
         {
-            if(enemyToCheck < spawnedEnemies.Count)//需要检查的怪物数小于总怪物数
+            if (enemyToCheck < spawnedEnemies.Count)//需要检查的怪物数小于总怪物数
             {
-                if(spawnedEnemies[enemyToCheck] != null)//有怪物
+                if (spawnedEnemies[enemyToCheck] != null)//有怪物
                 {
-                    if(Vector3.Distance(transform.position,spawnedEnemies[enemyToCheck].transform.position) > despawnDistance)//超出消失距离
+                    if (Vector3.Distance(transform.position, spawnedEnemies[enemyToCheck].transform.position) > despawnDistance)//超出消失距离
                     {
                         Destroy(spawnedEnemies[enemyToCheck]);//销毁
 
                         spawnedEnemies.RemoveAt(enemyToCheck);//从列表中去掉
                         checkTarget--;//索引减一
-                    } 
+                    }
                     else//索引加一
                     {
                         enemyToCheck++;//判断下一个怪物
                     }
-                } 
+                }
                 else//如果列表中元素为空
                 {
                     spawnedEnemies.RemoveAt(enemyToCheck);//去掉空的那个
-                    checkTarget --;//索引减一
+                    checkTarget--;//索引减一
                 }
-            } 
+            }
             else //防止错误
             {
                 enemyToCheck = 0;
@@ -121,26 +121,29 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector3 spawnPoint = Vector3.zero;
 
-        bool spawnVerticalEdge = Random.Range(0f , 1f) > .5f;//50% 0or1
-        if(spawnVerticalEdge)
+        bool spawnVerticalEdge = Random.Range(0f, 1f) > .5f;//50% 0or1
+        if (spawnVerticalEdge)
         {
-            spawnPoint.y = Random.Range(minSpawn.position.y , maxSpawn.position.y);
-            
-            if(Random.Range(0f , 1f) > .5f)
+            spawnPoint.y = Random.Range(minSpawn.position.y, maxSpawn.position.y);
+
+            if (Random.Range(0f, 1f) > .5f)
             {
                 spawnPoint.x = maxSpawn.position.x;
-            } else 
+            }
+            else
             {
                 spawnPoint.x = minSpawn.position.x;
             }
-        } else
+        }
+        else
         {
-            spawnPoint.x = Random.Range(minSpawn.position.x , maxSpawn.position.x);
-            
-            if(Random.Range(0f , 1f) > .5f)
+            spawnPoint.x = Random.Range(minSpawn.position.x, maxSpawn.position.x);
+
+            if (Random.Range(0f, 1f) > .5f)
             {
                 spawnPoint.y = maxSpawn.position.y;
-            } else 
+            }
+            else
             {
                 spawnPoint.y = minSpawn.position.y;
             }
@@ -152,7 +155,7 @@ public class EnemySpawner : MonoBehaviour
     public void GoToNextWave()//重置下一波的参数：波数计时器和生成计时器
     {
         currentWave++;//当前波数索引加一
-        if(currentWave >= waves.Count)//如果遍历到最后，甚至溢出列表，回到最后一波
+        if (currentWave >= waves.Count)//如果遍历到最后，甚至溢出列表，回到最后一波
         {
             currentWave = waves.Count - 1;
         }
