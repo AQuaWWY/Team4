@@ -15,12 +15,14 @@ public class PlayerController : MonoBehaviour
 
     public float pickupRange = 1.5f;
 
-    public Weapon activeWeapon;
+    //public Weapon activeWeapon;
+
+    public List<Weapon> unassignedWeapons, assignedWeapons;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        AddWeapon(Random.Range(0, unassignedWeapons.Count));//使用int不会随机到最高的数
     }
 
     // Update is called once per frame
@@ -35,5 +37,16 @@ public class PlayerController : MonoBehaviour
         moveInput.Normalize();//保持斜向速度一致
 
         transform.position += moveInput * moveSpeed * Time.deltaTime;//坐标加移动 deltaTime:帧数越高，数值越小，使所有玩家都有相同的移动速度
+    }
+
+    public void AddWeapon(int weaponNumber)//将武器列表中的一个武器放入到注册武器中
+    {
+        if (weaponNumber < unassignedWeapons.Count)
+        {
+            assignedWeapons.Add(unassignedWeapons[weaponNumber]);
+
+            unassignedWeapons[weaponNumber].gameObject.SetActive(true);//启动
+            unassignedWeapons.RemoveAt(weaponNumber);//在未注册的武器列表中删除
+        }
     }
 }
