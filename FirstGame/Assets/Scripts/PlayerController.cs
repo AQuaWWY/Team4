@@ -17,16 +17,19 @@ public class PlayerController : MonoBehaviour
 
     //public Weapon activeWeapon;
 
-    public List<Weapon> unassignedWeapons, assignedWeapons;
+    public List<Weapon> unassignedWeapons, assignedWeapons;//分配的武器和未分配的武器
+
+    public int maxWeapon = 3;
 
     // Start is called before the first frame update
     void Start()
     {
-        AddWeapon(Random.Range(0, unassignedWeapons.Count));//使用int不会随机到最高的数
+        AddWeapon(Random.Range(0, unassignedWeapons.Count));
+        //使用int不会随机到最大的数
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()//移动实现
     {
         Vector3 moveInput = new Vector3(0f, 0f, 0f);
         moveInput.x = Input.GetAxisRaw("Horizontal");//横向输入
@@ -48,5 +51,13 @@ public class PlayerController : MonoBehaviour
             unassignedWeapons[weaponNumber].gameObject.SetActive(true);//启动
             unassignedWeapons.RemoveAt(weaponNumber);//在未注册的武器列表中删除
         }
+    }
+
+    public void AddWeapon(Weapon weaponToAdd)
+    {
+        weaponToAdd.gameObject.SetActive(true);
+
+        assignedWeapons.Add(weaponToAdd);
+        unassignedWeapons.Remove(weaponToAdd);
     }
 }

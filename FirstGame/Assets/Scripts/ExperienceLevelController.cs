@@ -18,6 +18,8 @@ public class ExperienceLevelController : MonoBehaviour
     public List<int> expLevels;
     public int currentLevel = 1, levelCount = 100;
 
+    public List<Weapon> weaponsToUpgrade;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +70,40 @@ public class ExperienceLevelController : MonoBehaviour
         Time.timeScale = 0f;
 
         //UIController.instance.levelUpButtons[0].UpdateButtonDisplay(PlayerController.instance.activeWeapon);
-        UIController.instance.levelUpButtons[0].UpdateButtonDisplay(PlayerController.instance.assignedWeapons[0]);
+        //UIController.instance.levelUpButtons[0].UpdateButtonDisplay(PlayerController.instance.assignedWeapons[0]);
+        //UIController.instance.levelUpButtons[1].UpdateButtonDisplay(PlayerController.instance.unassignedWeapons[0]); 
+        //UIController.instance.levelUpButtons[2].UpdateButtonDisplay(PlayerController.instance.unassignedWeapons[1]);
+
+        weaponsToUpgrade.Clear();//清空列表
+
+        List<Weapon> availableWeapons = new List<Weapon>();
+        availableWeapons.AddRange(PlayerController.instance.assignedWeapons);
+
+        if (availableWeapons.Count > 0)//如果有武器
+        {
+            int selected = Random.Range(0, availableWeapons.Count);//随机选择一个武器
+            weaponsToUpgrade.Add(availableWeapons[selected]);//添加到升级列表
+            availableWeapons.RemoveAt(selected);//删除已经添加的武器
+        }
+
+        if (PlayerController.instance.assignedWeapons.Count < PlayerController.instance.maxWeapon)
+        {
+            availableWeapons.AddRange(PlayerController.instance.unassignedWeapons);//添加未注册的武器
+        }
+
+        for (int i = weaponsToUpgrade.Count; i < 3; i++)//使列表中至少有三种武器
+        {
+            if (availableWeapons.Count > 0)//如果有武器
+            {
+                int selected = Random.Range(0, availableWeapons.Count);//随机选择一个武器
+                weaponsToUpgrade.Add(availableWeapons[selected]);//添加到升级列表
+                availableWeapons.RemoveAt(selected);//删除已经添加的武器
+            }
+        }
+
+        for (int i = 0; i < weaponsToUpgrade.Count; i++)//更新升级按钮
+        {
+            UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);//更新按钮
+        }
     }
 }

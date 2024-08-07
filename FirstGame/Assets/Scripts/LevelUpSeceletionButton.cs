@@ -11,12 +11,22 @@ public class LevelUpSelectionButton : MonoBehaviour
 
     private Weapon assignedWeapon;
 
-    public void UpdateButtonDisplay(Weapon theWeapon)
+    public void UpdateButtonDisplay(Weapon theWeapon)//点击的武器按钮
     {
-        upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;
-        weaponIcon.sprite = theWeapon.icon;
+        if (theWeapon.gameObject.activeSelf == true)
+        {
+            upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;
+            weaponIcon.sprite = theWeapon.icon;
 
-        nameLevelText.text = theWeapon.name + " - Lvl " + theWeapon.weaponLevel;
+            nameLevelText.text = theWeapon.name + " - Lvl " + theWeapon.weaponLevel;
+        }
+        else
+        {
+            upgradeDescText.text = "Unlock " + theWeapon.name;
+            weaponIcon.sprite = theWeapon.icon;
+
+            nameLevelText.text = theWeapon.name;
+        }
 
         assignedWeapon = theWeapon;
     }
@@ -25,7 +35,14 @@ public class LevelUpSelectionButton : MonoBehaviour
     {
         if (assignedWeapon != null)//已分配的武器不为空
         {
-            assignedWeapon.LevelUp();//执行升级
+            if (assignedWeapon.gameObject.activeSelf == true)
+            {
+                assignedWeapon.LevelUp();//执行升级
+            }
+            else
+            {
+                PlayerController.instance.AddWeapon(assignedWeapon);//添加武器
+            }
 
             UIController.instance.levelUpPanel.SetActive(false);//关闭面板
             Time.timeScale = 1f;//时间继续

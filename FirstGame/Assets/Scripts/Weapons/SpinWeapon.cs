@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpinWeapon : Weapon//继承自Weapon类
 {
-
     public float rotateSpeed;
 
     public Transform holder, fireballToSpawn;
@@ -17,7 +16,7 @@ public class SpinWeapon : Weapon//继承自Weapon类
     // Start is called before the first frame update
     void Start()
     {
-        SetStats();
+        SetStats();//武器参数初始化
 
         //UIController.instance.levelUpButtons[0].UpdateButtonDisplay(this);
     }
@@ -44,7 +43,7 @@ public class SpinWeapon : Weapon//继承自Weapon类
         }
     }
 
-    public void SetStats()
+    public void SetStats()//武器参数设置
     {
         damager.damageAmount = stats[weaponLevel].damage;//设置EnemyDamager的伤害值
 
