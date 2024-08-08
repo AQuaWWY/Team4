@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
     public int maxWeapon = 3;
 
+    [HideInInspector]
+    public List<Weapon> fullyLevelUpWeapons = new List<Weapon>();
+
     // Start is called before the first frame update
     void Start()
     {

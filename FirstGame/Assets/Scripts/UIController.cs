@@ -38,4 +38,10 @@ public class UIController : MonoBehaviour
 
         expLvlText.text = "Level: " + currentLevel;//设置经验值文本
     }
+
+    public void SkipLevelUp()
+    {
+        levelUpPanel.SetActive(false);//关闭升级面板
+        Time.timeScale = 1f;//时间流速为1
+    }
 }

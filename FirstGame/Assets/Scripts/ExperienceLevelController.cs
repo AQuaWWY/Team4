@@ -86,7 +86,7 @@ public class ExperienceLevelController : MonoBehaviour
             availableWeapons.RemoveAt(selected);//删除已经添加的武器
         }
 
-        if (PlayerController.instance.assignedWeapons.Count < PlayerController.instance.maxWeapon)
+        if (PlayerController.instance.assignedWeapons.Count + PlayerController.instance.fullyLevelUpWeapons.Count < PlayerController.instance.maxWeapon)
         {
             availableWeapons.AddRange(PlayerController.instance.unassignedWeapons);//添加未注册的武器
         }
@@ -104,6 +104,18 @@ public class ExperienceLevelController : MonoBehaviour
         for (int i = 0; i < weaponsToUpgrade.Count; i++)//更新升级按钮
         {
             UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);//更新按钮
+        }
+
+        for (int i = 0; i < UIController.instance.levelUpButtons.Length; i++)//显示升级按钮
+        {
+            if (i < weaponsToUpgrade.Count)
+            {
+                UIController.instance.levelUpButtons[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                UIController.instance.levelUpButtons[i].gameObject.SetActive(false);
+            }
         }
     }
 }

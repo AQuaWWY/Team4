@@ -19,6 +19,12 @@ public class Weapon : MonoBehaviour
             weaponLevel++;
 
             statsUpdated = true;
+
+            if (weaponLevel == stats.Count - 1)
+            {
+                PlayerController.instance.fullyLevelUpWeapons.Add(this);//在满级列表中添加
+                PlayerController.instance.assignedWeapons.Remove(this);//在注册列表中删除
+            }
         }
     }
 }
