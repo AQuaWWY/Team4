@@ -19,6 +19,8 @@ public class UIController : MonoBehaviour
 
     public GameObject levelUpPanel;//升级面板
 
+    public TMP_Text coinText;//金币文本
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,5 +45,10 @@ public class UIController : MonoBehaviour
     {
         levelUpPanel.SetActive(false);//关闭升级面板
         Time.timeScale = 1f;//时间流速为1
+    }
+
+    public void UpDateCoins()
+    {
+        coinText.text = "Coins: " + CoinController.instance.currentCoins;//设置金币文本
     }
 }
