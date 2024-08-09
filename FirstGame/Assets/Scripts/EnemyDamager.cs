@@ -13,6 +13,12 @@ public class EnemyDamager : MonoBehaviour
 
     public bool destroyParent;
 
+    public bool damageOverTime;//是否持续伤害
+    public float timeBetweenDamage;//伤害间隔
+    private float damageCounter;//伤害计时器
+
+    private List<EnemyController> enemiesInRange = new List<EnemyController>();//敌人列表
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,13 +49,57 @@ public class EnemyDamager : MonoBehaviour
                 }
             }
         }
+
+        if (damageOverTime == true)//如果是持续伤害
+        {
+            damageCounter -= Time.deltaTime;//伤害计时器减少
+
+            if (damageCounter <= 0)//伤害计时器结束
+            {
+                damageCounter = timeBetweenDamage;//伤害计时器重置
+
+                for (int i = 0; i < enemiesInRange.Count; i++)//遍历敌人列表
+                {
+                    if (enemiesInRange[i] != null)//如果敌人不为空
+                    {
+                        enemiesInRange[i].TakeDamage(damageAmount, shouldKnockBack);//敌人受伤
+                    }
+                    else
+                    {
+                        enemiesInRange.RemoveAt(i);//移除敌人
+                        i--;
+                    }
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) //触发when两个collider碰撞
     {
-        if (collision.tag == "Enemy")//如果碰撞到的是敌人
+        if (damageOverTime == false)
         {
-            collision.GetComponent<EnemyController>().TakeDamage(damageAmount, shouldKnockBack);//调用敌人的受伤函数
+            if (collision.tag == "Enemy")//如果碰撞到的是敌人
+            {
+                collision.GetComponent<EnemyController>().TakeDamage(damageAmount, shouldKnockBack);//调用敌人的受伤函数
+            }
+        }
+        else
+        {
+            if (collision.tag == "Enemy")
+            {
+                enemiesInRange.Add(collision.GetComponent<EnemyController>());
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)//当两个collider不再碰撞时
+    {
+        if (damageOverTime == true)
+        {
+            if (collision.tag == "Enemy")
+            {
+                enemiesInRange.Remove(collision.GetComponent<EnemyController>());
+            }
         }
     }
 }
