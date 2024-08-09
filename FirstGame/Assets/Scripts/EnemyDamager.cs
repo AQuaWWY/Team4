@@ -19,6 +19,8 @@ public class EnemyDamager : MonoBehaviour
 
     private List<EnemyController> enemiesInRange = new List<EnemyController>();//敌人列表
 
+    public bool destroyOnImpact;//是否在碰撞时销毁
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,6 +83,11 @@ public class EnemyDamager : MonoBehaviour
             if (collision.tag == "Enemy")//如果碰撞到的是敌人
             {
                 collision.GetComponent<EnemyController>().TakeDamage(damageAmount, shouldKnockBack);//调用敌人的受伤函数
+
+                if (destroyOnImpact == true)
+                {
+                    Destroy(gameObject);//销毁物体
+                }
             }
         }
         else

@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3394263704381878717}
   - component: {fileID: 5693741719611546606}
   - component: {fileID: 1864854447879910053}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy 5 - Boar
   m_TagString: Enemy
   m_Icon: {fileID: 0}
