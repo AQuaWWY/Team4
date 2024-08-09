@@ -29,23 +29,33 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (knockBackCounter > 0)
+        if (PlayerController.instance.gameObject.activeSelf == true)
         {
-            knockBackCounter -= Time.deltaTime;
 
-            if (moveSpeed > 0)
+            if (knockBackCounter > 0)
             {
-                moveSpeed = -moveSpeed * 2f;
+                knockBackCounter -= Time.deltaTime;
+
+                if (moveSpeed > 0)
+                {
+                    moveSpeed = -moveSpeed * 2f;
+                }
+
+                if (knockBackCounter <= 0)
+                {
+                    moveSpeed = Math.Abs(moveSpeed * 0.5f);
+                }
             }
 
-            if (knockBackCounter <= 0)
-            {
-                moveSpeed = Math.Abs(moveSpeed * 0.5f);
-            }
+            theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
+            //设置敌人移动的向量
+            //normalize使向量的大小化为之前设计好的长度1
+        }
+        else
+        {
+            theRB.velocity = Vector2.zero;//玩家死亡后，敌人停止移动
         }
 
-        theRB.velocity = (target.position - transform.position).normalized * moveSpeed;//设置敌人移动的向量
-        //normalize使向量的大小化为之前设计好的长度1
         if (hitCounter > 0)
         {
             hitCounter -= Time.deltaTime;
