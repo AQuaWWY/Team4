@@ -22,9 +22,9 @@ public class PlayerController : MonoBehaviour
     public int maxWeapon = 3;
 
     [HideInInspector]
-    public List<Weapon> fullyLevelUpWeapons = new List<Weapon>();
+    public List<Weapon> fullyLevelUpWeapons = new List<Weapon>();//满级武器列表
 
-    // Start is called before the first frame update
+    //游戏开始时随机一把武器
     void Start()
     {
         if (assignedWeapons.Count == 0)
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    //玩家移动
     void Update()//移动实现
     {
         Vector3 moveInput = new Vector3(0f, 0f, 0f);
@@ -48,7 +48,8 @@ public class PlayerController : MonoBehaviour
         transform.position += moveInput * moveSpeed * Time.deltaTime;//坐标加移动 deltaTime:帧数越高，数值越小，使所有玩家都有相同的移动速度
     }
 
-    public void AddWeapon(int weaponNumber)//将武器列表中的一个武器放入到注册武器中
+    //将武器列表中的一个武器放入到注册武器中
+    public void AddWeapon(int weaponNumber)
     {
         if (weaponNumber < unassignedWeapons.Count)
         {
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //将武器列表中的一个武器放入到注册武器中
     public void AddWeapon(Weapon weaponToAdd)
     {
         weaponToAdd.gameObject.SetActive(true);

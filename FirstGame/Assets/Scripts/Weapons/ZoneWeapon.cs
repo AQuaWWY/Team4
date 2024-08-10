@@ -16,6 +16,7 @@ public class ZoneWeapon : Weapon
     // Update is called once per frame
     void Update()
     {
+        //升级
         if (statsUpdated == true)
         {
             statsUpdated = false;
@@ -23,13 +24,14 @@ public class ZoneWeapon : Weapon
             SetStats();
         }
 
-        spawnCounter -= Time.deltaTime;
+        spawnCounter -= Time.deltaTime;//计数器减去时间
 
-        if (spawnCounter <= 0f)//定时生成伤害区域
+        //定时生成伤害区域
+        if (spawnCounter <= 0f)//计数器小于等于0
         {
-            spawnCounter = spawnTime;
+            spawnCounter = spawnTime;//重置计数器
 
-            Instantiate(damager, damager.transform.position, Quaternion.identity, transform).gameObject.SetActive(true);
+            Instantiate(damager, damager.transform.position, Quaternion.identity, transform).gameObject.SetActive(true);//创建武器预制体的副本
         }
     }
 
