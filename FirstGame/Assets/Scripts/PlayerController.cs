@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public List<Weapon> unassignedWeapons, assignedWeapons;//分配的武器和未分配的武器
 
-    public int maxWeapon = 3;
+    public int maxWeapons = 3;
 
     [HideInInspector]
     public List<Weapon> fullyLevelUpWeapons = new List<Weapon>();//满级武器列表
@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
             AddWeapon(Random.Range(0, unassignedWeapons.Count));
             //使用int不会随机到最大的数
         }
+
+        moveSpeed = PlayerStatController.instance.moveSpeed[0].value;
+        pickupRange = PlayerStatController.instance.pickupRange[0].value;
+        maxWeapons = Mathf.RoundToInt(PlayerStatController.instance.maxWeapons[0].value);
     }
 
     //玩家移动

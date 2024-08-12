@@ -19,6 +19,8 @@ public class PlayerHealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxHealth = PlayerStatController.instance.health[0].value;
+
         //设置总血量和当前血量
         currentHealth = maxHealth;
 

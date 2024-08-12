@@ -86,7 +86,7 @@ public class ExperienceLevelController : MonoBehaviour
             availableWeapons.RemoveAt(selected);//删除已经添加的武器
         }
 
-        if (PlayerController.instance.assignedWeapons.Count + PlayerController.instance.fullyLevelUpWeapons.Count < PlayerController.instance.maxWeapon)
+        if (PlayerController.instance.assignedWeapons.Count + PlayerController.instance.fullyLevelUpWeapons.Count < PlayerController.instance.maxWeapons)
         {
             availableWeapons.AddRange(PlayerController.instance.unassignedWeapons);//添加未注册的武器
         }
@@ -117,5 +117,7 @@ public class ExperienceLevelController : MonoBehaviour
                 UIController.instance.levelUpButtons[i].gameObject.SetActive(false);
             }
         }
+
+        PlayerStatController.instance.UpdateDisplay();//更新显示
     }
 }

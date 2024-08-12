@@ -21,6 +21,8 @@ public class UIController : MonoBehaviour
 
     public TMP_Text coinText;//金币文本
 
+    public PlayerStatUpgradeDisplay moveSpeedUpgradeDisplay, healthUpgradeDisplay, pickupRangeUpgradeDisplay, maxWeaponsUpgradeDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,5 +52,29 @@ public class UIController : MonoBehaviour
     public void UpDateCoins()
     {
         coinText.text = "Coins: " + CoinController.instance.currentCoins;//设置金币文本
+    }
+
+    public void PurchaseMoveSpeed()
+    {
+        PlayerStatController.instance.PurchaseMoveSpeed();//调用PlayerStatController中的升级函数
+        SkipLevelUp();//关闭升级面板
+    }
+
+    public void PurchaseHealth()
+    {
+        PlayerStatController.instance.PurchaseHealth();
+        SkipLevelUp();
+    }
+
+    public void PurchasePickupRange()
+    {
+        PlayerStatController.instance.PurchasePickupRange();
+        SkipLevelUp();
+    }
+
+    public void PurchaseMaxWeapons()
+    {
+        PlayerStatController.instance.PurchaseMaxWeapons();
+        SkipLevelUp();
     }
 }
