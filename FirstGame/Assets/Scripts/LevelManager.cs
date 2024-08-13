@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
     private bool gameActive;
     public float timer;
 
+    public float waitToEndScreen = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +34,18 @@ public class LevelManager : MonoBehaviour
     public void EndLevel()
     {
         gameActive = false;
+
+        StartCoroutine(EndLevelCo());
+    }
+
+    IEnumerator EndLevelCo()
+    {
+        yield return new WaitForSeconds(waitToEndScreen);
+
+        float minutes = Mathf.FloorToInt(timer / 60f);
+        float seconds = Mathf.FloorToInt(timer % 60f);
+
+        UIController.instance.endTimeText.text = minutes.ToString() + " mins " + seconds.ToString("00" + " secs");
+        UIController.instance.levelEndScreen.SetActive(true);//显示关卡结束面板
     }
 }
