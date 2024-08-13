@@ -16,6 +16,8 @@ public class PlayerHealthController : MonoBehaviour
 
     public Slider healthSlider;//Slider对象
 
+    public GameObject deathEffect;//死亡特效
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +46,10 @@ public class PlayerHealthController : MonoBehaviour
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);//deactivate the player
+
+            LevelManager.instance.EndLevel();//end the level
+
+            Instantiate(deathEffect, transform.position, transform.rotation);//生成死亡特效
         }
 
         healthSlider.value = currentHealth;//更新Slider当前血量
