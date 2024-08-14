@@ -29,6 +29,9 @@ public class UIController : MonoBehaviour
     public GameObject levelEndScreen;//关卡结束面板
     public TMP_Text endTimeText;//关卡结束信息
 
+    public string mainMenuName;//主菜单场景名
+
+    public GameObject pauseScreen;//暂停画布
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +42,10 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseUnpause();
+        }
     }
 
     public void UpDateExperience(int currentExp, int levelExp, int currentLevel)
@@ -95,11 +101,36 @@ public class UIController : MonoBehaviour
 
     public void GoToMainMenu()
     {
-
+        SceneManager.LoadScene(mainMenuName);//加载主菜单场景
+        Time.timeScale = 1f;//恢复游戏
     }
 
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;//恢复游戏
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void PauseUnpause()
+    {
+        //pauseScreen.SetActive(!pauseScreen.activeInHierarchy);//暂停画布的激活状态取反
+        if (pauseScreen.activeSelf == false)//如果暂停画布激活
+        {
+            pauseScreen.SetActive(true);//激活暂停画布
+            Time.timeScale = 0f;//暂停游戏
+        }
+        else
+        {
+            pauseScreen.SetActive(false);//关闭暂停画布
+            if (levelUpPanel.activeSelf == false)//如果升级面板未激活
+            {
+                Time.timeScale = 1f;//恢复游戏
+            }
+        }
     }
 }
