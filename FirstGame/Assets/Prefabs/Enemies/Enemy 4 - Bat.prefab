@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1062443959434919651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.65, y: -0.61, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67,9 +67,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: 0.6}
+  m_Offset: {x: -0.093423635, y: 0.7785263}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.48996282
 --- !u!50 &6752301261106262951
 Rigidbody2D:
   serializedVersion: 4
@@ -116,6 +116,8 @@ MonoBehaviour:
   health: 7
   knockBackTime: 0.5
   expToGive: 4
+  coinValue: 1
+  coinDropRate: 0.5
 --- !u!1 &2097840756267170562
 GameObject:
   m_ObjectHideFlags: 0
