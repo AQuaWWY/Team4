@@ -42,6 +42,8 @@ public class ExperienceLevelController : MonoBehaviour
         if (currentExperience >= expLevels[currentLevel])//如果当前经验值超过此等级的经验值，升级
         {
             LevelUp();
+
+            SFXManger.instance.PlaySFX(0);//升级音效
         }
 
         UIController.instance.UpDateExperience(currentExperience, expLevels[currentLevel], currentLevel);//更新UI

@@ -51,6 +51,8 @@ public class ExpPickup : MonoBehaviour
             ExperienceLevelController.instance.GetExp(expValue);
 
             Destroy(gameObject);
+
+            SFXManger.instance.PlaySFXPitch(1);//经验拾取音效
         }
     }
 }
