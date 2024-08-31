@@ -43,6 +43,8 @@ public class PlayerHealthController : MonoBehaviour
     {
         currentHealth -= damageToTake;
 
+        SFXManger.instance.PlaySFXPitch(7);//受伤音效
+
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);//deactivate the player
@@ -50,6 +52,8 @@ public class PlayerHealthController : MonoBehaviour
             LevelManager.instance.EndLevel();//end the level
 
             Instantiate(deathEffect, transform.position, transform.rotation);//生成死亡特效
+
+            SFXManger.instance.PlaySFX(6);//死亡音效
         }
 
         healthSlider.value = currentHealth;//更新Slider当前血量

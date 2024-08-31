@@ -51,6 +51,8 @@ public class CoinPickup : MonoBehaviour
             CoinController.instance.AddCoins(coinAmount);
 
             Destroy(gameObject);
+
+            SFXManger.instance.PlaySFXPitch(5);
         }
     }
 }

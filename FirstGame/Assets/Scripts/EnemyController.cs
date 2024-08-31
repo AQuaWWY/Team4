@@ -78,7 +78,7 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damageToTake)
     {
-        SFXManger.instance.PlaySFX(2);//敌人受击音效
+        SFXManger.instance.PlaySFXPitch(2);//敌人受击音效
 
         health -= damageToTake;
 

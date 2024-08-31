@@ -49,7 +49,7 @@ public class ProjectileWeapon : Weapon
 
                     Instantiate(projectile, transform.position, projectile.transform.rotation).gameObject.SetActive(true);//生成子弹
 
-                    SFXManger.instance.PlaySFX(3);//射击音效
+                    SFXManger.instance.PlaySFXPitch(3);//射击音效
 
                 }
             }
