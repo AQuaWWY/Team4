@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
 
     public int coinValue = 1;//敌人死亡后给予的金币值
     public float coinDropRate = 0.5f;//金币掉落概率
+    public int peachHealthValue = 50;//敌人死亡后给予的桃子的血量
+    public float peachDropRate = 0.5f;//桃子掉落概率
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +93,11 @@ public class EnemyController : MonoBehaviour
             if (UnityEngine.Random.value <= coinDropRate)
             {
                 CoinController.instance.DropCoin(transform.position, coinValue);//生成金币
+            }
+            //将桃子掉落加在此处
+            if (UnityEngine.Random.value <= peachDropRate)
+            {
+                PeachController.instance.DropPeach(transform.position, peachHealthValue);//生成桃子
             }
         }
 

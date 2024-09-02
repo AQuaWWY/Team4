@@ -202,3 +202,5 @@ MonoBehaviour:
   expToGive: 1
   coinValue: 1
   coinDropRate: 0.5
+  peachHealthValue: 5
+  peachDropRate: 0.5

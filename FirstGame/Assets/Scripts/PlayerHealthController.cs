@@ -58,4 +58,16 @@ public class PlayerHealthController : MonoBehaviour
 
         healthSlider.value = currentHealth;//更新Slider当前血量
     }
+
+    public void HealPlayer(int healAmount)//治疗玩家
+    {
+        currentHealth += healAmount;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        healthSlider.value = currentHealth;//更新Slider当前血量
+    }
 }
