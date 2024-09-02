@@ -94,11 +94,11 @@ public class EnemyController : MonoBehaviour
             {
                 CoinController.instance.DropCoin(transform.position, coinValue);//生成金币
             }
-            //将桃子掉落加在此处
-            if (UnityEngine.Random.value <= peachDropRate)
-            {
-                PeachController.instance.DropPeach(transform.position, peachHealthValue);//生成桃子
-            }
+            // //将桃子掉落加在此处
+            // if (UnityEngine.Random.value <= peachDropRate)
+            // {
+            //     PeachController.instance.DropPeach(transform.position, peachHealthValue);//生成桃子
+            // }
         }
 
         DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);//生成伤害数字
