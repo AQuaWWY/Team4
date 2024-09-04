@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
 
     private float waveCounter;//波数持续时间计时器
 
+    public string bossScene;//boss场景
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +47,11 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if (Input.GetKeyDown(KeyCode.N)) // 按下 N 键跳转到下一个场景
+        // {
+        //     JumpToNextScene();
+        // }
+        
         //每帧减少计时器spawnerCounter，当计时器小于等于0时，重置计时器并在指定位置生成一个新的敌人对象，然后将该敌人添加到spawnedEnemies列表中进行管理。
         /* spawnerCounter -= Time.deltaTime;
         if(spawnerCounter <= 0)
@@ -59,9 +67,9 @@ public class EnemySpawner : MonoBehaviour
 
         if (PlayerHealthController.instance.gameObject.activeSelf)//如果玩家处于激活状态（存活）
         {
-            if (currentWave < waves.Count)//未遍历所有波数
+            if (currentWave < waves.Count - 1)//未遍历所有波数
             {
-                waveCounter -= Time.deltaTime;//波数计时器递减直0
+                waveCounter -= Time.deltaTime;//波数计时器递减至0
 
                 if (waveCounter <= 0)//当计时器减到0才会进入下一波
                 {
@@ -78,6 +86,30 @@ public class EnemySpawner : MonoBehaviour
 
                     spawnedEnemies.Add(newEnemy);//添加到列表中
                 }
+            }
+            else if (currentWave == waves.Count - 1)//最后一波
+            {
+                waveCounter -= Time.deltaTime;//波数计时器递减至0
+
+                if (waveCounter <= 0)//当计时器减到0才会进入下一波
+                {
+                    currentWave++;//下一波
+                }
+
+                spawnCounter -= Time.deltaTime;//生成计时器递减直0
+
+                if (spawnCounter <= 0)//生成计时器减到0，生成新的敌人
+                {
+                    spawnCounter = waves[currentWave].timeBetweenSpawns;//重置生成计时器为设定好的时间间隔
+
+                    GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SelectSpawnPoint(), Quaternion.identity);//生成新的敌人
+
+                    spawnedEnemies.Add(newEnemy);//添加到列表中
+                }
+            }
+            else//来一个boss
+            {
+                JumpToNextScene();
             }
         }
 
@@ -155,13 +187,18 @@ public class EnemySpawner : MonoBehaviour
     public void GoToNextWave()//重置下一波的参数：波数计时器和生成计时器
     {
         currentWave++;//当前波数索引加一
-        if (currentWave >= waves.Count)//如果遍历到最后，甚至溢出列表，回到最后一波
-        {
-            currentWave = waves.Count - 1;
-        }
+        // if (currentWave >= waves.Count)//如果遍历到最后，甚至溢出列表，回到最后一波
+        // {
+        //     currentWave = waves.Count - 1;
+        // }
 
         waveCounter = waves[currentWave].waveLength;//持续十秒的倒计时
         spawnCounter = waves[currentWave].timeBetweenSpawns;//一秒的怪物生成间隔
+    }
+
+    public void JumpToNextScene()//跳转到boss场景
+    {
+        SceneManager.LoadScene("Boss Scene");
     }
 }
 

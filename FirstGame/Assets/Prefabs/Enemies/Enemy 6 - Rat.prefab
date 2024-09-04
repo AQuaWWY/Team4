@@ -199,6 +199,8 @@ MonoBehaviour:
   hitWaitTime: 1
   health: 2
   knockBackTime: 0.5
-  expToGive: 6
+  expToGive: 0
   coinValue: 1
   coinDropRate: 0.5
+  peachHealthValue: 1
+  peachDropRate: 0.5
