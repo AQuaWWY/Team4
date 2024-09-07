@@ -69,7 +69,7 @@ public class PlayerHealthController : MonoBehaviour
         }
 
         healthSlider.value = currentHealth;//更新Slider当前血量
-        
-        //SFXManger.instance.PlaySFXPitch(8);//治疗音效
+
+        SFXManger.instance.PlaySFXPitch(8);//治疗音效
     }
 }
