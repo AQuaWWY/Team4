@@ -45,14 +45,14 @@ public class PeachPickup : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {//碰撞检测，如果经验检测到玩家标签，经验值增加，删除经验物体
+    {
         if (collision.tag == "Player")
         {
             PeachController.instance.Heal(healAmount);
 
             Destroy(gameObject);
 
-            SFXManger.instance.PlaySFXPitch(5);
+            //SFXManger.instance.PlaySFXPitch(5);
         }
     }
 }
