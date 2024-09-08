@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (PlayerHealthController.instance.gameObject.activeSelf)//如果玩家处于激活状态（存活）
         {
-            if (currentWave < waves.Count)//未遍历所有波数
+            if (currentWave < waves.Count - 1)//未遍历所有波数
             {
                 waveCounter -= Time.deltaTime;//波数计时器递减直0
 
@@ -78,6 +78,30 @@ public class EnemySpawner : MonoBehaviour
 
                     spawnedEnemies.Add(newEnemy);//添加到列表中
                 }
+            }
+            else if (currentWave == waves.Count - 1)//遍历所有波数
+            {
+                waveCounter -= Time.deltaTime;//波数计时器递减直0
+
+                if (waveCounter <= 0)//当计时器减到0才会进入下一波
+                {
+                    currentWave++;
+                }
+
+                spawnCounter -= Time.deltaTime;//生成计时器递减直0
+
+                if (spawnCounter <= 0)//生成计时器减到0，生成新的敌人
+                {
+                    spawnCounter = waves[currentWave].timeBetweenSpawns;//重置生成计时器为设定好的时间间隔
+
+                    GameObject newEnemy = Instantiate(waves[currentWave].enemyToSpawn, SelectSpawnPoint(), Quaternion.identity);//生成新的敌人
+
+                    spawnedEnemies.Add(newEnemy);//添加到列表中
+                }
+            }
+            else
+            {
+                //添加boss场景
             }
         }
 
