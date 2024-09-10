@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerStatController : MonoBehaviour
 {
     public static PlayerStatController instance;
+    public PlayerStatData playerStatData;
+
     private void Awake()
     {
         instance = this;
@@ -16,7 +18,7 @@ public class PlayerStatController : MonoBehaviour
     public int moveSpeedLevel, healthLevel, pickupRangeLevel, maxWeaponsLevel;
 
     // Start is called before the first frame update
-    void Start()
+    void Start()//自动新建每个元素的等级数值
     {
         for (int i = moveSpeed.Count - 1; i < moveSpeedLevelCount; i++)
         {
@@ -35,7 +37,7 @@ public class PlayerStatController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()//如果UI启动，显示信息
     {
         if (UIController.instance.levelUpPanel.activeSelf == true)
         {
@@ -43,7 +45,7 @@ public class PlayerStatController : MonoBehaviour
         }
     }
 
-    public void UpdateDisplay()
+    public void UpdateDisplay()//在UI中显示正确的升级信息
     {
         if (moveSpeedLevel < moveSpeed.Count - 1)
         {
@@ -89,7 +91,7 @@ public class PlayerStatController : MonoBehaviour
         CoinController.instance.SpendCoins(moveSpeed[moveSpeedLevel].cost);
         UpdateDisplay();
 
-        PlayerController.instance.moveSpeed = moveSpeed[moveSpeedLevel].value;
+        LoadMoveSpeed();
     }
 
     public void PurchaseHealth()
@@ -98,8 +100,7 @@ public class PlayerStatController : MonoBehaviour
         CoinController.instance.SpendCoins(health[healthLevel].cost);
         UpdateDisplay();
 
-        PlayerHealthController.instance.maxHealth = health[healthLevel].value;
-        PlayerHealthController.instance.currentHealth += health[healthLevel].value - health[healthLevel - 1].value;//当前血量加上升级的血量
+        LoadHealth();
     }
 
     public void PurchasePickupRange()
@@ -108,7 +109,7 @@ public class PlayerStatController : MonoBehaviour
         CoinController.instance.SpendCoins(pickupRange[pickupRangeLevel].cost);
         UpdateDisplay();
 
-        PlayerController.instance.pickupRange = pickupRange[pickupRangeLevel].value;
+        LoadPickupRange();
     }
 
     public void PurchaseMaxWeapons()
@@ -117,7 +118,40 @@ public class PlayerStatController : MonoBehaviour
         CoinController.instance.SpendCoins(maxWeapons[maxWeaponsLevel].cost);
         UpdateDisplay();
 
+        LoadMaxWeapons();
+    }
+
+    public void LoadMoveSpeed()
+    {
+        PlayerController.instance.moveSpeed = moveSpeed[moveSpeedLevel].value;
+    }
+
+    public void LoadHealth()
+    {
+        PlayerHealthController.instance.maxHealth = health[healthLevel].value;
+        PlayerHealthController.instance.currentHealth += health[healthLevel].value - health[healthLevel - 1].value;//当前血量加上升级的血量
+    }
+
+    public void LoadPickupRange()
+    {
+        PlayerController.instance.pickupRange = pickupRange[pickupRangeLevel].value;
+    }
+
+    public void LoadMaxWeapons()
+    {
         PlayerController.instance.maxWeapons = Mathf.RoundToInt(maxWeapons[maxWeaponsLevel].value);
+    }
+
+    // 保存数据
+    public void SavePlayerStats()
+    {
+        playerStatData.SaveData(this);
+    }
+
+    // 加载数据
+    public void LoadPlayerStats()
+    {
+        playerStatData.LoadData(this);
     }
 }
 
