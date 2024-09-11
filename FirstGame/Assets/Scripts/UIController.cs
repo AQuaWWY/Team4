@@ -107,7 +107,7 @@ public class UIController : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("wwyScene");//加载wwyScene
         Time.timeScale = 1f;//恢复游戏
     }
 

@@ -20,7 +20,7 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (once == 1)
+        if (once == 1)//加载一次数据
         {
             LoadData();
             once = 0;
@@ -33,5 +33,6 @@ public class BossController : MonoBehaviour
         PlayerStatController.instance.LoadHealth();
         PlayerStatController.instance.LoadPickupRange();
         PlayerStatController.instance.LoadMaxWeapons();
+        //GameManager.instance.LoadWeapons();
     }
 }
