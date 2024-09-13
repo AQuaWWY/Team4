@@ -9,12 +9,12 @@ public class BossController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerStatController.instance.LoadPlayerStats();
+        // PlayerStatController.instance.LoadPlayerStats();
 
-        PlayerStatController.instance.LoadMoveSpeed();
-        PlayerStatController.instance.LoadHealth();
-        PlayerStatController.instance.LoadPickupRange();
-        PlayerStatController.instance.LoadMaxWeapons();
+        // PlayerStatController.instance.LoadMoveSpeed();
+        // PlayerStatController.instance.LoadHealth();
+        // PlayerStatController.instance.LoadPickupRange();
+        // PlayerStatController.instance.LoadMaxWeapons();
     }
 
     // Update is called once per frame

@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public List<WeaponStats> stats;//武器状态列表
     public int weaponLevel;//武器等级
+    public bool isEnable = false;//是否启用
 
     [HideInInspector]//在侧边栏中隐藏
     public bool statsUpdated;//状态更新
@@ -14,6 +15,8 @@ public class Weapon : MonoBehaviour
 
     public void LevelUp()//升级时调用
     {
+        //isEnable = true;//启用
+
         if (weaponLevel <= stats.Count - 1)//武器当前等级小于最大等级（合理等级时）
         {
             weaponLevel++;//等级+1

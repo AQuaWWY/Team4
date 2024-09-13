@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
             assignedWeapons.Add(unassignedWeapons[weaponNumber]);
 
             unassignedWeapons[weaponNumber].gameObject.SetActive(true);//启动
+            unassignedWeapons[weaponNumber].isEnable = true;//设为启用
             unassignedWeapons.RemoveAt(weaponNumber);//在未注册的武器列表中删除
         }
     }
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
     public void AddWeapon(Weapon weaponToAdd)
     {
         weaponToAdd.gameObject.SetActive(true);
+        weaponToAdd.isEnable = true;
 
         assignedWeapons.Add(weaponToAdd);
         unassignedWeapons.Remove(weaponToAdd);

@@ -29,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
 
     private float waveCounter;//波数持续时间计时器
 
+    public static GameManager instance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,11 +108,7 @@ public class EnemySpawner : MonoBehaviour
                 //按下N键切换到boss场景
                 if (Input.GetKeyDown(KeyCode.N))//检测T键被按下就启动函数扣除伤害
                 {
-                    PlayerStatController.instance.SavePlayerStats();//保存数据
-
-                    //GameManager.instance.SaveWeapons();
-
-                    SceneManager.LoadScene("Boss Scene");
+                    GameManager.instance.GotoBossScene();//进入boss场景
                 }
             }
         }
