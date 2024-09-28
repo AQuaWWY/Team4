@@ -128,8 +128,22 @@ public class PlayerStatController : MonoBehaviour
 
     public void LoadHealth()
     {
+        if (healthLevel < 0 || healthLevel >= health.Count)//如果生命值等级超出范围
+        {
+            Debug.LogError("healthLevel is out of range.");//显示错误信息
+            return;
+        }
+
         PlayerHealthController.instance.maxHealth = health[healthLevel].value;
-        PlayerHealthController.instance.currentHealth += health[healthLevel].value - health[healthLevel - 1].value;//当前血量加上升级的血量
+
+        if (healthLevel > 0)
+        {
+            PlayerHealthController.instance.currentHealth += health[healthLevel].value - health[healthLevel - 1].value;
+        }
+        else
+        {
+            PlayerHealthController.instance.currentHealth = health[healthLevel].value;
+        }
     }
 
     public void LoadPickupRange()

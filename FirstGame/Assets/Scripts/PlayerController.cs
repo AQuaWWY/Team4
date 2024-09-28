@@ -5,10 +5,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+    public PlayerStatData playerStatData;
 
-    private void Awake()
+    void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        // 检查 playerStatData 是否已赋值
+        if (playerStatData == null)
+        {
+            Debug.LogError("playerStatData is not assigned.");
+        }
     }
 
     public float moveSpeed;
@@ -21,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     public int maxWeapons = 3;
 
-    [HideInInspector]
+    //[HideInInspector]
     public List<Weapon> fullyLevelUpWeapons = new List<Weapon>();//满级武器列表
 
     //游戏开始时随机一把武器
@@ -52,7 +62,7 @@ public class PlayerController : MonoBehaviour
         transform.position += moveInput * moveSpeed * Time.deltaTime;//坐标加移动 deltaTime:帧数越高，数值越小，使所有玩家都有相同的移动速度
     }
 
-    //将武器列表中的一个武器放入到注册武器中
+    //将武器列表中的一个武器放入到注册武器中，只用于第一次随机武器
     public void AddWeapon(int weaponNumber)
     {
         if (weaponNumber < unassignedWeapons.Count)
@@ -74,4 +84,31 @@ public class PlayerController : MonoBehaviour
         assignedWeapons.Add(weaponToAdd);
         unassignedWeapons.Remove(weaponToAdd);
     }
+
+    public void SaveWeapons()
+    {
+        playerStatData.SaveWeapons(this);
+    }
+
+    public void LoadWeapons()
+    {
+        playerStatData.LoadWeapons(this);
+    }
+
+    public void Activate()
+    {
+        foreach (Weapon weapon in assignedWeapons)
+        {
+            weapon.gameObject.SetActive(true);
+            weapon.isEnable = true;
+        }
+
+        foreach (Weapon weapon in fullyLevelUpWeapons)
+        {
+            //weapon.gameObject.SetActive(true);
+            //weapon.isEnable = true;
+            Debug.Log("Activate" + weapon.name);
+        }
+    }
+    
 }

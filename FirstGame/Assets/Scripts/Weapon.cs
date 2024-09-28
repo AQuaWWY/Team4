@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public List<WeaponStats> stats;//武器状态列表
+    public List<WeaponStats> stats;//单个武器的所有等级的状态列表
     public int weaponLevel;//武器等级
     public bool isEnable = false;//是否启用
 

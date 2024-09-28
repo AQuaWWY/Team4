@@ -9,12 +9,9 @@ public class BossController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // PlayerStatController.instance.LoadPlayerStats();
+        PlayerStatController.instance.LoadPlayerStats();//加载玩家数据
+        PlayerController.instance.LoadWeapons();//加载武器数据
 
-        // PlayerStatController.instance.LoadMoveSpeed();
-        // PlayerStatController.instance.LoadHealth();
-        // PlayerStatController.instance.LoadPickupRange();
-        // PlayerStatController.instance.LoadMaxWeapons();
     }
 
     // Update is called once per frame
@@ -27,12 +24,13 @@ public class BossController : MonoBehaviour
         }
     }
 
-    public void LoadData()
+    public void LoadData()//将数据导入到玩家数据中
     {
         PlayerStatController.instance.LoadMoveSpeed();
         PlayerStatController.instance.LoadHealth();
         PlayerStatController.instance.LoadPickupRange();
         PlayerStatController.instance.LoadMaxWeapons();
-        //GameManager.instance.LoadWeapons();
+        PlayerController.instance.LoadWeapons();//加载武器数据
+        PlayerController.instance.Activate();
     }
 }
