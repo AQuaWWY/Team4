@@ -85,30 +85,53 @@ public class PlayerController : MonoBehaviour
         unassignedWeapons.Remove(weaponToAdd);
     }
 
-    public void SaveWeapons()
-    {
-        playerStatData.SaveWeapons(this);
-    }
+    // public void SaveWeapons()
+    // {
+    //     //playerStatData.PersistActivatedWeapons(this);
+    //     playerStatData.SaveWeapons(this);
+    // }
 
-    public void LoadWeapons()
-    {
-        playerStatData.LoadWeapons(this);
-    }
+    // public void LoadWeapons()
+    // {
+    //     playerStatData.LoadWeapons(this);
+    //}
 
-    public void Activate()
-    {
-        foreach (Weapon weapon in assignedWeapons)
-        {
-            weapon.gameObject.SetActive(true);
-            weapon.isEnable = true;
-        }
+    // public void Activate()
+    // {
+    //     foreach (Weapon weapon in assignedWeapons)
+    //     {
+    //         if (weapon != null && weapon.gameObject != null)
+    //         {
+    //             // weapon.gameObject.SetActive(true);
+    //             // weapon.isEnable = true;
+    //         }
+    //         else if (weapon == null)
+    //         {
+    //             Debug.LogWarning("weapon == null.");
+    //         }
+    //         else if (weapon.gameObject == null)
+    //         {
+    //             Debug.LogWarning("weapon.gameObject == null.");
+    //         }
+    //     }
 
-        foreach (Weapon weapon in fullyLevelUpWeapons)
-        {
-            //weapon.gameObject.SetActive(true);
-            //weapon.isEnable = true;
-            Debug.Log("Activate" + weapon.name);
-        }
-    }
-    
+    //     foreach (Weapon weapon in fullyLevelUpWeapons)
+    //     {
+    //         if (weapon != null && weapon.gameObject != null)
+    //         {
+    //             // weapon.gameObject.SetActive(true);
+    //             // weapon.isEnable = true;
+    //             Debug.Log("Activate " + weapon.name);
+    //         }
+    //         else if (weapon == null)
+    //         {
+    //             Debug.LogWarning("weapon == null.");
+    //         }
+    //         else if (weapon.gameObject == null)
+    //         {
+    //             Debug.LogWarning("weapon.gameObject == null.");
+    //         }
+    //     }
+    // }
+
 }

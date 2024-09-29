@@ -45,64 +45,119 @@ public class PlayerStatData : ScriptableObject
         controller.maxWeaponsLevel = maxWeaponsLevel;
     }
 
-    public void SaveWeapons(PlayerController controller)
-    {
-        assignedWeapons = new List<Weapon>();
-        unassignedWeapons = new List<Weapon>();
-        fullyLevelUpWeapons = new List<Weapon>();
+    // public void SaveWeapons(PlayerController controller)
+    // {
+    //     assignedWeapons = new List<Weapon>();
+    //     unassignedWeapons = new List<Weapon>();
+    //     fullyLevelUpWeapons = new List<Weapon>();
 
-        assignedWeapons.Clear();
-        unassignedWeapons.Clear();
-        fullyLevelUpWeapons.Clear();
+    //     assignedWeapons.Clear();
+    //     unassignedWeapons.Clear();
+    //     fullyLevelUpWeapons.Clear();
 
-        foreach (var weapon in controller.assignedWeapons)
-        {
-            assignedWeapons.Add(weapon);
-            Debug.Log("Save " + weapon.name);
-            Debug.Log("element is " + assignedWeapons[assignedWeapons.Count-1].name);
-        }
+    //     foreach (var weapon in controller.assignedWeapons)
+    //     {
+    //         assignedWeapons.Add(weapon);
+    //         Debug.Log("Save " + weapon.name);
+    //         Debug.Log("element is " + assignedWeapons[assignedWeapons.Count - 1].name);
+    //     }
 
-        foreach (var weapon in controller.unassignedWeapons)
-        {
-            unassignedWeapons.Add(weapon);
-            Debug.Log("Save " + weapon.name);
-            Debug.Log("element is " + unassignedWeapons[unassignedWeapons.Count-1].name);
-        }
+    //     foreach (var weapon in controller.unassignedWeapons)
+    //     {
+    //         unassignedWeapons.Add(weapon);
+    //         Debug.Log("Save " + weapon.name);
+    //         Debug.Log("element is " + unassignedWeapons[unassignedWeapons.Count - 1].name);
+    //     }
 
-        foreach (var weapon in controller.fullyLevelUpWeapons)
-        {
-            fullyLevelUpWeapons.Add(weapon);
-            Debug.Log("Save " + weapon.name);
-            Debug.Log("element is " + fullyLevelUpWeapons[fullyLevelUpWeapons.Count-1].name);
-        }
+    //     foreach (var weapon in controller.fullyLevelUpWeapons)
+    //     {
+    //         fullyLevelUpWeapons.Add(weapon);
+    //         Debug.Log("Save " + weapon.name);
+    //         Debug.Log("element is " + fullyLevelUpWeapons[fullyLevelUpWeapons.Count - 1].name);
+    //     }
 
+    // }
 
+    // public void LoadWeapons(PlayerController controller)
+    // {
+    //     controller.assignedWeapons = new List<Weapon>();
+    //     controller.unassignedWeapons = new List<Weapon>();
+    //     controller.fullyLevelUpWeapons = new List<Weapon>();
 
-    }
+    //     controller.assignedWeapons.Clear();
+    //     controller.unassignedWeapons.Clear();
+    //     controller.fullyLevelUpWeapons.Clear();
+    //     Debug.Log("Loading assigned weapons...");
+    //     foreach (var weapon in assignedWeapons)
+    //     {
+    //         if (weapon != null && weapon.gameObject != null)
+    //         {
+    //             controller.assignedWeapons.Add(weapon);
+    //             Debug.Log("Loaded " + weapon.name);
+    //         }
+    //         else if (weapon == null)
+    //         {
+    //             Debug.LogWarning("Assigned weapon is null.");
+    //         }
+    //         else if (weapon.gameObject == null)
+    //         {
+    //             Debug.LogWarning("Assigned weapon's gameObject is null.");
+    //         }
+    //     }
 
-    public void LoadWeapons(PlayerController controller)
-    {
-        controller.assignedWeapons = new List<Weapon>();
-        controller.unassignedWeapons = new List<Weapon>();
-        controller.fullyLevelUpWeapons = new List<Weapon>();
+    //     Debug.Log("Loading unassigned weapons...");
+    //     foreach (var weapon in unassignedWeapons)
+    //     {
+    //         if (weapon != null && weapon.gameObject != null)
+    //         {
+    //             controller.unassignedWeapons.Add(weapon);
+    //             Debug.Log("Loaded " + weapon.name);
+    //         }
+    //         else if (weapon == null)
+    //         {
+    //             Debug.LogWarning("Unassigned weapon is null.");
+    //         }
+    //         else if (weapon.gameObject == null)
+    //         {
+    //             Debug.LogWarning("Unassigned weapon's gameObject is null.");
+    //         }
+    //     }
 
-        controller.assignedWeapons.Clear();
-        controller.unassignedWeapons.Clear();
-        controller.fullyLevelUpWeapons.Clear();
+    //     Debug.Log("Loading fully level up weapons...");
+    //     foreach (var weapon in fullyLevelUpWeapons)
+    //     {
+    //         if (weapon != null && weapon.gameObject != null)
+    //         {
+    //             controller.fullyLevelUpWeapons.Add(weapon);
+    //             Debug.Log("Loaded " + weapon.name);
+    //         }
+    //         else if (weapon == null)
+    //         {
+    //             Debug.LogWarning("Fully level up weapon is null.");
+    //         }
+    //         else if (weapon.gameObject == null)
+    //         {
+    //             Debug.LogWarning("Fully level up weapon's gameObject is null.");
+    //         }
+    //     }
+    // }
 
-        foreach (var weapon in assignedWeapons)
-        {
-            controller.assignedWeapons.Add(weapon);
-        }
+    // public void PersistActivatedWeapons(PlayerController controller)
+    // {
+    //     foreach (var weapon in controller.assignedWeapons)
+    //     {
+    //         DontDestroyOnLoad(weapon.gameObject);
+    //     }
 
-        foreach (var weapon in unassignedWeapons)
-        {
-            controller.unassignedWeapons.Add(weapon);
-        }
+    //     foreach (var weapon in controller.unassignedWeapons)
+    //     {
+    //         DontDestroyOnLoad(weapon.gameObject);
+    //     }
 
-        foreach (var weapon in fullyLevelUpWeapons)
-        {
-            controller.fullyLevelUpWeapons.Add(weapon);
-        }
-    }
+    //     foreach (var weapon in controller.fullyLevelUpWeapons)
+    //     {
+    //         DontDestroyOnLoad(weapon.gameObject);
+    //     }
+    // }
+
 }

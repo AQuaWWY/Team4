@@ -10,7 +10,7 @@ public class BossController : MonoBehaviour
     void Start()
     {
         PlayerStatController.instance.LoadPlayerStats();//加载玩家数据
-        PlayerController.instance.LoadWeapons();//加载武器数据
+        //PlayerController.instance.LoadWeapons();//加载武器数据
 
     }
 
@@ -30,7 +30,8 @@ public class BossController : MonoBehaviour
         PlayerStatController.instance.LoadHealth();
         PlayerStatController.instance.LoadPickupRange();
         PlayerStatController.instance.LoadMaxWeapons();
-        PlayerController.instance.LoadWeapons();//加载武器数据
-        PlayerController.instance.Activate();
+        //PlayerController.instance.LoadWeapons();//加载武器数据
+        //PlayerController.instance.Activate();
+        WeaponManager.instance.FindPlayer();
     }
 }

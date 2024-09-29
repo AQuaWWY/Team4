@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
 
         PlayerStatController.instance.SavePlayerStats();//保存数据
-        PlayerController.instance.SaveWeapons();//保存武器数据
+        //PlayerController.instance.SaveWeapons();//保存武器数据
 
         SceneManager.LoadScene("Boss Scene");
     }
