@@ -103,9 +103,17 @@ public class ExperienceLevelController : MonoBehaviour
             }
         }
 
+        // 检查 weaponsToUpgrade 中的每个武器是否被销毁
         for (int i = 0; i < weaponsToUpgrade.Count; i++)//更新升级按钮
         {
-            UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);//更新按钮
+            if (weaponsToUpgrade[i] != null)
+            {
+                UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);//更新按钮
+            }
+            else
+            {
+                Debug.LogWarning("A weapon in the upgrade list is null or has been destroyed.");
+            }
         }
 
         for (int i = 0; i < UIController.instance.levelUpButtons.Length; i++)//显示升级按钮

@@ -107,9 +107,18 @@ public class UIController : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("wwyScene");//加载wwyScene
-        Time.timeScale = 1f;//恢复游戏
+        // 销毁 WeaponManager 实例
+        if (WeaponManager.instance != null)
+        {
+            Destroy(WeaponManager.instance.gameObject); // 确保当前的 WeaponManager 被销毁
+            WeaponManager.instance = null; // 重置实例引用
+        }
+
+        // 重新加载 wwyScene
+        SceneManager.LoadScene("wwyScene");
+        Time.timeScale = 1f; // 恢复游戏
     }
+
 
     public void QuitGame()
     {

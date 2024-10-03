@@ -8,6 +8,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
+        // 确保只有一个 WeaponManager 实例
         if (instance == null)
         {
             instance = this;
@@ -19,6 +20,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
+        // 注册场景加载事件
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -38,6 +40,7 @@ public class WeaponManager : MonoBehaviour
 
     public void FindPlayer()
     {
+        // 查找 PlayerController 来设置 target
         PlayerController player = FindObjectOfType<PlayerController>();
         if (player != null)
         {
@@ -56,25 +59,26 @@ public class WeaponManager : MonoBehaviour
 
         if (scene.name != "wwyScene" && scene.name != "Boss Scene")
         {
-            Debug.Log("Destroying Weapons and its children.");
-
-            foreach (Transform child in transform)
-            {
-                Debug.Log("Destroying child: " + child.name);
-                Destroy(child.gameObject);
-            }
-
+            // 销毁不需要保留的场景中的 Weapons 对象
             Destroy(gameObject);
         }
         else
         {
-            // 在新的场景中找到玩家
+            // 重新加载场景后，确保找到玩家
             FindPlayer();
+
+            // 确保 target 在重新加载场景后没有丢失
+            if (target == null)
+            {
+                Debug.LogWarning("Target is null after scene load, attempting to find player again.");
+                FindPlayer();
+            }
         }
     }
 
     private void OnDestroy()
     {
+        // 移除场景加载监听器，避免重复回调
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
