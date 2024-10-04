@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossController : MonoBehaviour
+public class BossSceneController : MonoBehaviour
 {
-    public static BossController instance;
+    public static BossSceneController instance;
     private int once = 1;
     // Start is called before the first frame update
     void Start()
