@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossBehaviorController : MonoBehaviour
@@ -17,6 +16,7 @@ public class BossBehaviorController : MonoBehaviour
     private float currentHealth; // 当前生命值
 
     private float attackTimer = 0; // 攻击冷却计时器
+    private bool facingRight = true; // 用于记录BOSS当前的朝向
 
     void Start()
     {
@@ -35,6 +35,9 @@ public class BossBehaviorController : MonoBehaviour
         // 计算BOSS和玩家之间的距离
         distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
+        // 始终面向玩家
+        FacePlayer();
+
         // 如果BOSS不在攻击范围内，则向玩家移动
         if (distanceToPlayer > attackRange && !isAttacking)
         {
@@ -42,6 +45,9 @@ public class BossBehaviorController : MonoBehaviour
         }
         else
         {
+            // 停止移动，切换到Idle状态
+            animator.SetBool("isMoving", false);
+
             // 如果BOSS在攻击范围内，并且冷却时间已过，则攻击
             if (!isAttacking && attackTimer <= 0)
             {
@@ -67,10 +73,36 @@ public class BossBehaviorController : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
     }
 
+    // 始终面向玩家
+    void FacePlayer()
+    {
+        // 判断玩家在BOSS的左边还是右边
+        if (player.position.x < transform.position.x && facingRight)
+        {
+            // 如果玩家在左边，而BOSS面朝右，则翻转
+            Flip();
+        }
+        else if (player.position.x > transform.position.x && !facingRight)
+        {
+            // 如果玩家在右边，而BOSS面朝左，则翻转
+            Flip();
+        }
+    }
+
+    // 翻转BOSS的朝向
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
+
     // BOSS发动攻击
     IEnumerator Attack()
     {
-        // 停止移动
+        Debug.Log("Starting Attack"); // 调试信息
+                                      // 停止移动
         animator.SetBool("isMoving", false);
 
         // 设置攻击动画
@@ -85,6 +117,7 @@ public class BossBehaviorController : MonoBehaviour
         // 攻击完成，进入冷却
         attackTimer = attackCooldown;
         isAttacking = false;
+        Debug.Log("Attack finished, cooling down"); // 调试信息
     }
 
     // BOSS受到伤害
@@ -116,5 +149,8 @@ public class BossBehaviorController : MonoBehaviour
 
         // 停止一切移动或攻击行为
         StopAllCoroutines();
+
+        // 禁用BOSS的所有行为
+        this.enabled = false;
     }
 }

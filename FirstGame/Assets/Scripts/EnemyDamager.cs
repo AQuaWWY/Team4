@@ -37,7 +37,7 @@ public class EnemyDamager : MonoBehaviour
 
         lifeTime -= Time.deltaTime;//生命周期减少
 
-        if (lifeTime <= 0)//生命周期结束
+        if (lifeTime <= 0)//武器生命周期结束
         {
             targetSize = Vector3.zero;//目标大小为0
 
@@ -52,7 +52,7 @@ public class EnemyDamager : MonoBehaviour
             }
         }
 
-        if (damageOverTime == true)//如果是持续伤害
+        if (damageOverTime == true)//创建需要扣血的敌人列表
         {
             damageCounter -= Time.deltaTime;//伤害计时器减少
 
@@ -78,7 +78,7 @@ public class EnemyDamager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) //触发when两个collider碰撞
     {
-        if (damageOverTime == false)
+        if (damageOverTime == false)//单次伤害
         {
             if (collision.tag == "Enemy")//如果碰撞到的是敌人
             {
