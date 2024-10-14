@@ -182,6 +182,10 @@ public class BossBehaviorController : MonoBehaviour
         // 播放死亡动画
         animator.SetTrigger("Death");
 
+        BossBehaviorController.instance.healthSlider.gameObject.SetActive(false); // 隐藏血条
+
+        isDead = true; // 设置BOSS死亡状态
+
     }
 
 }
