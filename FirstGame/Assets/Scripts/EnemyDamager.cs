@@ -89,6 +89,21 @@ public class EnemyDamager : MonoBehaviour
                     Destroy(gameObject);//销毁物体
                 }
             }
+            else if (collision.tag == "Boss") // 如果碰撞到的是BOSS
+            {
+                // 获取 BossBehaviorController 并调用 TakeDamage 方法
+                BossBehaviorController boss = collision.GetComponent<BossBehaviorController>();
+                if (boss != null)
+                {
+                    //if(BossBehaviorController.instance.isDead)
+                    boss.TakeDamage(damageAmount); // 对BOSS造成伤害
+                }
+
+                // if (destroyOnImpact == true)
+                // {
+                //     Destroy(gameObject);
+                // }
+            }
         }
         else
         {
@@ -96,6 +111,15 @@ public class EnemyDamager : MonoBehaviour
             {
                 enemiesInRange.Add(collision.GetComponent<EnemyController>());
             }
+            // else if (collision.tag == "Boss")
+            // {
+            //     // 如果是BOSS，添加到敌人列表进行持续伤害
+            //     BossBehaviorController boss = collision.GetComponent<BossBehaviorController>();
+            //     if (boss != null)
+            //     {
+            //         enemiesInRange.Add(boss);
+            //     }
+            // }
         }
     }
 

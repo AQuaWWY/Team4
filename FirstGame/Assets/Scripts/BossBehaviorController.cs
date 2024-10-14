@@ -5,7 +5,8 @@ using UnityEngine.UI; // 引入UI组件
 public class BossBehaviorController : MonoBehaviour
 {
     public static BossBehaviorController instance; // 单例模式
-    private void Awake(){
+    private void Awake()
+    {
         instance = this;
     }
 
@@ -17,6 +18,7 @@ public class BossBehaviorController : MonoBehaviour
     public float maxHealth = 100f; // BOSS的最大生命值
     public float currentHealth; // BOSS的当前生命值
     public Slider healthSlider; // 血条Slider
+    public float damageAmount = 30f; // BOSS的攻击伤害
 
     private Animator animator; // BOSS的Animator组件
     private float distanceToPlayer; // BOSS与玩家的距离
@@ -77,8 +79,8 @@ public class BossBehaviorController : MonoBehaviour
                 a = 0; // 冷却结束后重置 a
             }
         }
-            currentHealth= currentHealth - 0.01f;
-            healthSlider.value = currentHealth;
+        currentHealth = currentHealth - 0.01f;
+        healthSlider.value = currentHealth;
 
     }
 
@@ -129,6 +131,9 @@ public class BossBehaviorController : MonoBehaviour
         // 设置攻击动画
         animator.SetTrigger("Attack");
 
+        //PlayerHealthController.instance.TakeDamage(damageAmount); 
+        // 攻击时对玩家造成10点伤害
+
         // 攻击中，设置isAttacking为true
         isAttacking = true;
 
@@ -141,10 +146,11 @@ public class BossBehaviorController : MonoBehaviour
         Debug.Log("Attack finished, cooling down"); // 调试信息
     }
 
+
     // BOSS受到伤害
     public void TakeDamage(float damage)
     {
-        if (isDead) return;
+        if (isDead) return;  // 确保不会多次调用死亡逻辑
 
         // 减少生命值
         currentHealth -= damage;
@@ -152,29 +158,30 @@ public class BossBehaviorController : MonoBehaviour
         // 更新血条
         healthSlider.value = currentHealth;
 
-        // 触发受击动画
-        animator.SetTrigger("TakeHit");
-
-        // 如果生命值小于等于0，触发死亡动画
+        // 如果生命值小于等于 0，先播放受击动画再播放死亡动画
         if (currentHealth <= 0)
         {
+            Debug.Log("Boss Died!");
+
+            // 播放受击动画
+            animator.SetTrigger("TakeHit");
+
+            // 确保 TakeHit 结束后播放死亡动画
             Die();
+        }
+        else
+        {
+            // 如果没有死亡，播放普通的受击动画
+            animator.SetTrigger("TakeHit");
         }
     }
 
-    // BOSS死亡
+    // 受击动画播放完后播放死亡动画
     void Die()
     {
-        // 触发死亡动画
+        // 播放死亡动画
         animator.SetTrigger("Death");
 
-        // 标记BOSS为死亡状态，防止后续动作
-        isDead = true;
-
-        // 停止一切移动或攻击行为
-        StopAllCoroutines();
-
-        // 禁用BOSS的所有行为
-        this.enabled = false;
     }
+
 }
