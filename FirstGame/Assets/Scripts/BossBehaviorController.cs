@@ -1,65 +1,85 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI; // 引入UI组件
 
 public class BossBehaviorController : MonoBehaviour
 {
+    public static BossBehaviorController instance; // 单例模式
+    private void Awake(){
+        instance = this;
+    }
+
+
     public Transform player; // 玩家对象的Transform
     public float moveSpeed = 2.0f; // BOSS的移动速度
     public float attackRange = 3.0f; // BOSS的攻击范围
     public float attackCooldown = 2.0f; // BOSS攻击的冷却时间
     public float maxHealth = 100f; // BOSS的最大生命值
+    public float currentHealth; // BOSS的当前生命值
+    public Slider healthSlider; // 血条Slider
 
     private Animator animator; // BOSS的Animator组件
     private float distanceToPlayer; // BOSS与玩家的距离
     private bool isAttacking = false; // 用来判断BOSS是否正在攻击
     private bool isDead = false; // 判断BOSS是否死亡
-    private float currentHealth; // 当前生命值
 
     private float attackTimer = 0; // 攻击冷却计时器
     private bool facingRight = true; // 用于记录BOSS当前的朝向
+    private int a = 0;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         currentHealth = maxHealth; // 初始化BOSS的生命值
+
+        // 设置血条的最大值和当前值
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
     }
 
     void Update()
     {
-        // 如果BOSS已经死亡，不再执行任何操作
-        if (isDead)
-        {
-            return;
-        }
-
         // 计算BOSS和玩家之间的距离
         distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         // 始终面向玩家
         FacePlayer();
 
-        // 如果BOSS不在攻击范围内，则向玩家移动
-        if (distanceToPlayer > attackRange && !isAttacking)
+        // 如果BOSS未死亡且不在攻击中，处理BOSS的移动和攻击逻辑
+        if (!isDead)
         {
-            MoveTowardsPlayer();
-        }
-        else
-        {
-            // 停止移动，切换到Idle状态
-            animator.SetBool("isMoving", false);
-
-            // 如果BOSS在攻击范围内，并且冷却时间已过，则攻击
-            if (!isAttacking && attackTimer <= 0)
+            if (distanceToPlayer < attackRange)
             {
-                StartCoroutine(Attack());
+                // 如果在攻击范围内且BOSS不在攻击中并且冷却结束，开始攻击
+                if (!isAttacking && attackTimer <= 0)
+                {
+                    StartCoroutine(Attack());
+                }
+            }
+            else
+            {
+                // 如果不在攻击范围内，且BOSS不在攻击中，移动到玩家位置
+                if (!isAttacking)
+                {
+                    MoveTowardsPlayer();
+                }
+            }
+
+            // 更新攻击冷却计时器
+            if (attackTimer > 0)
+            {
+                a = 1; // 冷却中，将 a 设置为 1
+                attackTimer -= Time.deltaTime;
+            }
+            else if (attackTimer <= 0 && a == 1)
+            {
+                Debug.Log("Cool down finished");
+                a = 0; // 冷却结束后重置 a
             }
         }
+            currentHealth= currentHealth - 0.01f;
+            healthSlider.value = currentHealth;
 
-        // 更新攻击计时器
-        if (attackTimer > 0)
-        {
-            attackTimer -= Time.deltaTime;
-        }
     }
 
     // BOSS移动到玩家位置
@@ -102,7 +122,8 @@ public class BossBehaviorController : MonoBehaviour
     IEnumerator Attack()
     {
         Debug.Log("Starting Attack"); // 调试信息
-                                      // 停止移动
+
+        // 停止移动
         animator.SetBool("isMoving", false);
 
         // 设置攻击动画
@@ -111,8 +132,8 @@ public class BossBehaviorController : MonoBehaviour
         // 攻击中，设置isAttacking为true
         isAttacking = true;
 
-        // 攻击完成后冷却
-        yield return new WaitForSeconds(1.0f); // 假设攻击动画持续1秒
+        // 等待攻击动画完成（假设攻击动画持续2秒）
+        yield return new WaitForSeconds(2.0f);
 
         // 攻击完成，进入冷却
         attackTimer = attackCooldown;
@@ -127,6 +148,9 @@ public class BossBehaviorController : MonoBehaviour
 
         // 减少生命值
         currentHealth -= damage;
+
+        // 更新血条
+        healthSlider.value = currentHealth;
 
         // 触发受击动画
         animator.SetTrigger("TakeHit");

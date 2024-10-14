@@ -64,6 +64,14 @@ public class EnemySpawner : MonoBehaviour
         {
             if (currentWave < waves.Count - 1)//未遍历所有波数
             {
+
+                //-----------------------------------
+                if (Input.GetKeyDown(KeyCode.N))//检测T键被按下就启动函数扣除伤害
+                {
+                    GameManager.instance.GotoBossScene();//进入boss场景
+                }
+                //-----------------------------------
+                
                 waveCounter -= Time.deltaTime;//波数计时器递减直0
 
                 if (waveCounter <= 0)//当计时器减到0才会进入下一波
