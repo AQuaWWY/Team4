@@ -153,6 +153,9 @@ public class BossBehaviorController : MonoBehaviour
         // 攻击中，设置isAttacking为true
         isAttacking = true;
 
+        // 等待攻击动画完成（假设攻击动画持续2秒）
+        //yield return new WaitForSeconds(2.0f);
+
         // 攻击完成，进入冷却
         attackTimer = attackCooldown;
         isAttacking = false;
