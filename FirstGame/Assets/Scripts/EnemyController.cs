@@ -10,25 +10,27 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed;
     private Transform target;
     public float damage;
-    public float hitWaitTime = 1f;//受击间隔
-    private float hitCounter;//用于倒计时
+    public float hitWaitTime = 1f; // 受击间隔
+    private float hitCounter; // 用于倒计时
     public float health = 5f;
 
-    public float knockBackTime = 0.5f;//击退时间
-    private float knockBackCounter;//用于倒计时
+    public float knockBackTime = 0.5f; // 击退时间
+    private float knockBackCounter; // 用于倒计时
 
-    public int expToGive = 1;//敌人死亡后给予的经验值
+    public int expToGive = 1; // 敌人死亡后给予的经验值
 
-    public int coinValue = 1;//敌人死亡后给予的金币值
-    public float coinDropRate = 0.5f;//金币掉落概率
-    public int peachHealthValue = 50;//敌人死亡后给予的桃子的血量
-    public float peachDropRate = 0.5f;//桃子掉落概率
+    public int coinValue = 1; // 敌人死亡后给予的金币值
+    public float coinDropRate = 0.5f; // 金币掉落概率
+    public int peachHealthValue = 50; // 敌人死亡后给予的桃子的血量
+    public float peachDropRate = 0.5f; // 桃子掉落概率
+
+    private bool facingRight = true; // 记录敌人当前的朝向
 
     // Start is called before the first frame update
     void Start()
     {
-        //target = FindAnyObjectByType<PlayerController>().transform;//让每个敌人都搜索一次玩家的位置
-        target = PlayerHealthController.instance.transform;//让健康系统找到玩家位置，性能更高
+        // target = FindAnyObjectByType<PlayerController>().transform; // 让每个敌人都搜索一次玩家的位置
+        target = PlayerHealthController.instance.transform; // 让健康系统找到玩家位置，性能更高
     }
 
     // Update is called once per frame
@@ -36,7 +38,6 @@ public class EnemyController : MonoBehaviour
     {
         if (PlayerController.instance.gameObject.activeSelf == true)
         {
-
             if (knockBackCounter > 0)
             {
                 knockBackCounter -= Time.deltaTime;
@@ -52,13 +53,15 @@ public class EnemyController : MonoBehaviour
                 }
             }
 
+            // 设置敌人移动的向量
             theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
-            //设置敌人移动的向量
-            //normalize使向量的大小化为之前设计好的长度1
+
+            // 始终面向玩家
+            FacePlayer();
         }
         else
         {
-            theRB.velocity = Vector2.zero;//玩家死亡后，敌人停止移动
+            theRB.velocity = Vector2.zero; // 玩家死亡后，敌人停止移动
         }
 
         if (hitCounter > 0)
@@ -67,41 +70,59 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) //触发when两个collider碰撞
+    // 始终面向玩家
+    void FacePlayer()
     {
-        //1.将player加入tag，函数发现敌人碰撞到对应tag的时候执行
+        // 判断玩家在敌人的左边还是右边
+        if (target.position.x < transform.position.x && facingRight)
+        {
+            // 如果玩家在左边，而敌人面朝右，则翻转
+            Flip();
+        }
+        else if (target.position.x > transform.position.x && !facingRight)
+        {
+            // 如果玩家在右边，而敌人面朝左，则翻转
+            Flip();
+        }
+    }
+
+    // 翻转敌人的朝向
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) // 玩家收到伤害
+    {
+        // 当敌人碰撞到玩家时执行
         if (collision.gameObject.tag == "Player" && hitCounter <= 0f)
         {
             PlayerHealthController.instance.TakeDamage(damage);
-
             hitCounter = hitWaitTime;
         }
     }
 
     public void TakeDamage(float damageToTake)
     {
-        SFXManger.instance.PlaySFXPitch(2);//敌人受击音效
+        SFXManger.instance.PlaySFXPitch(2); // 敌人受击音效
 
         health -= damageToTake;
 
         if (health <= 0)
         {
             Destroy(gameObject);
-
-            ExperienceLevelController.instance.SpawnExp(transform.position, expToGive);//生成在敌人死亡位置,获取需要掉落的经验数量
+            ExperienceLevelController.instance.SpawnExp(transform.position, expToGive); // 生成经验值
 
             if (UnityEngine.Random.value <= coinDropRate)
             {
-                CoinController.instance.DropCoin(transform.position, coinValue);//生成金币
+                CoinController.instance.DropCoin(transform.position, coinValue); // 生成金币
             }
-            // //将桃子掉落加在此处
-            // if (UnityEngine.Random.value <= peachDropRate)
-            // {
-            //     PeachController.instance.DropPeach(transform.position, peachHealthValue);//生成桃子
-            // }
         }
 
-        DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);//生成伤害数字
+        DamageNumberController.instance.SpawnDamage(damageToTake, transform.position); // 生成伤害数字
     }
 
     public void TakeDamage(float damageToTake, bool shouldKnockBack)

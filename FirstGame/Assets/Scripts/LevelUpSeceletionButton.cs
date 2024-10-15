@@ -13,6 +13,13 @@ public class LevelUpSelectionButton : MonoBehaviour
 
     public void UpdateButtonDisplay(Weapon theWeapon)//用于点击的对应武器的升级按钮
     {
+        // 首先检查 theWeapon 是否为 null，以避免访问已销毁的对象
+        if (theWeapon == null)
+        {
+            Debug.LogWarning("The weapon is null or has been destroyed.");
+            return;
+        }
+
         if (theWeapon.gameObject.activeSelf == true)//启用的武器
         {
             upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;

@@ -37,7 +37,7 @@ public class EnemyDamager : MonoBehaviour
 
         lifeTime -= Time.deltaTime;//生命周期减少
 
-        if (lifeTime <= 0)//生命周期结束
+        if (lifeTime <= 0)//武器生命周期结束
         {
             targetSize = Vector3.zero;//目标大小为0
 
@@ -52,7 +52,7 @@ public class EnemyDamager : MonoBehaviour
             }
         }
 
-        if (damageOverTime == true)//如果是持续伤害
+        if (damageOverTime == true)//创建需要扣血的敌人列表
         {
             damageCounter -= Time.deltaTime;//伤害计时器减少
 
@@ -78,7 +78,7 @@ public class EnemyDamager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) //触发when两个collider碰撞
     {
-        if (damageOverTime == false)
+        if (damageOverTime == false)//单次伤害
         {
             if (collision.tag == "Enemy")//如果碰撞到的是敌人
             {
@@ -89,6 +89,10 @@ public class EnemyDamager : MonoBehaviour
                     Destroy(gameObject);//销毁物体
                 }
             }
+            else if (collision.tag == "Boss") // 如果碰撞到的是BOSS
+            {
+                BossBehaviorController.instance.TakeDamage(damageAmount); // 调用BOSS的受伤函数
+            }
         }
         else
         {
@@ -96,6 +100,15 @@ public class EnemyDamager : MonoBehaviour
             {
                 enemiesInRange.Add(collision.GetComponent<EnemyController>());
             }
+            // else if (collision.tag == "Boss")
+            // {
+            //     // 如果是BOSS，添加到敌人列表进行持续伤害
+            //     BossBehaviorController boss = collision.GetComponent<BossBehaviorController>();
+            //     if (boss != null)
+            //     {
+            //         enemiesInRange.Add(boss);
+            //     }
+            // }
         }
     }
 

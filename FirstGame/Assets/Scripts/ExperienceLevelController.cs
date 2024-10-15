@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExperienceLevelController : MonoBehaviour
 {
@@ -8,7 +9,36 @@ public class ExperienceLevelController : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        // 确保只有一个 CoinController 实例
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
+            // 注册场景加载事件
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        else
+        {
+            Destroy(gameObject); // 防止重复实例
+            return;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 注销场景加载事件，防止内存泄漏
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 场景加载后的回调函数
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 检查当前场景是否为 BossScene 或 wwyScene
+        if (scene.name != "BossScene" && scene.name != "wwyScene")
+        {
+            Destroy(gameObject); // 如果不是 BossScene 或 wwyScene，则销毁CoinController
+        }
     }
 
     public int currentExperience;
@@ -103,9 +133,17 @@ public class ExperienceLevelController : MonoBehaviour
             }
         }
 
+        // 检查 weaponsToUpgrade 中的每个武器是否被销毁
         for (int i = 0; i < weaponsToUpgrade.Count; i++)//更新升级按钮
         {
-            UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);//更新按钮
+            if (weaponsToUpgrade[i] != null)
+            {
+                UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);//更新按钮
+            }
+            else
+            {
+                Debug.LogWarning("A weapon in the upgrade list is null or has been destroyed.");
+            }
         }
 
         for (int i = 0; i < UIController.instance.levelUpButtons.Length; i++)//显示升级按钮
