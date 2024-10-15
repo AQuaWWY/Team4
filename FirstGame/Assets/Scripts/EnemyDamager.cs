@@ -100,15 +100,11 @@ public class EnemyDamager : MonoBehaviour
             {
                 enemiesInRange.Add(collision.GetComponent<EnemyController>());
             }
-            // else if (collision.tag == "Boss")
-            // {
-            //     // 如果是BOSS，添加到敌人列表进行持续伤害
-            //     BossBehaviorController boss = collision.GetComponent<BossBehaviorController>();
-            //     if (boss != null)
-            //     {
-            //         enemiesInRange.Add(boss);
-            //     }
-            // }
+            else if (collision.tag == "Boss")
+            {
+                //调用boss的另一个受伤函数
+                BossBehaviorController.instance.TakeDamage(damageAmount); // 调用BOSS的受伤函数
+            }
         }
     }
 
