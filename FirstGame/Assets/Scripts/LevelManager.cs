@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
     public float timer;
 
     public float waitToEndScreen = 1f;
+    public float waitToWinningScreen = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -55,5 +56,23 @@ public class LevelManager : MonoBehaviour
 
         UIController.instance.endTimeText.text = minutes.ToString() + " mins " + seconds.ToString("00" + " secs");
         UIController.instance.levelEndScreen.SetActive(true);//显示关卡结束面板
+    }
+
+    public void Winning()
+    {
+        gameActive = false;
+
+        StartCoroutine(WinningCo());
+    }
+
+    IEnumerator WinningCo()
+    {
+        yield return new WaitForSeconds(waitToWinningScreen);
+
+        float minutes = Mathf.FloorToInt(timer / 60f);
+        float seconds = Mathf.FloorToInt(timer % 60f);
+
+        UIController.instance.winTimeText.text = minutes.ToString() + " mins " + seconds.ToString("00" + " secs");
+        UIController.instance.winningScreen.SetActive(true);//显示关卡结束面板
     }
 }

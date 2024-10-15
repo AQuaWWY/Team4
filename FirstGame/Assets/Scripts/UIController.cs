@@ -35,10 +35,13 @@ public class UIController : MonoBehaviour
 
     public GameObject levelEndScreen;//关卡结束面板
     public TMP_Text endTimeText;//关卡结束信息
+    public TMP_Text winTimeText;//关卡结束金币信息
 
     public string mainMenuName;//主菜单场景名
 
     public GameObject pauseScreen;//暂停画布
+
+    public GameObject winningScreen;//胜利画布
 
     // Start is called before the first frame update
     void Start()
@@ -123,6 +126,7 @@ public class UIController : MonoBehaviour
 
         levelEndScreen.SetActive(false);//关闭关卡结束面板
         pauseScreen.SetActive(false);//关闭暂停画布
+        winningScreen.SetActive(false); // 关闭胜利画布
 
         // 重新加载 wwyScene
         SceneManager.LoadScene("wwyScene");

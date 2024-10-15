@@ -207,6 +207,7 @@ public class BossBehaviorController : MonoBehaviour
 
         isDead = true; // 设置BOSS死亡状态
 
+        LevelManager.instance.Winning(); // 调用UIController的Winning方法
     }
 
     // 更新 PolygonCollider2D 形状以匹配当前 Sprite
