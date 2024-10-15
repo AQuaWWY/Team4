@@ -130,6 +130,7 @@ public class UIController : MonoBehaviour
 
         // 重新加载 wwyScene
         SceneManager.LoadScene("wwyScene");
+        LevelManager.instance.timer = 0f;//重置时间
         Time.timeScale = 1f; // 恢复游戏
     }
 
