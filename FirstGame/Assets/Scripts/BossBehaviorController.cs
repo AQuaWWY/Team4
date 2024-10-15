@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI; // 引入UI组件
+using System.Collections.Generic;
 
 public class BossBehaviorController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class BossBehaviorController : MonoBehaviour
     public float maxHealth = 100f; // BOSS的最大生命值
     public float currentHealth; // BOSS的当前生命值
     public Slider healthSlider; // 血条Slider
-    public float damageAmount = 30f; // BOSS的攻击伤害
+    public float damageAmount = 10f; // BOSS的攻击伤害
 
     private Animator animator; // BOSS的Animator组件
     private float distanceToPlayer; // BOSS与玩家的距离
@@ -29,6 +30,10 @@ public class BossBehaviorController : MonoBehaviour
     private bool facingRight = true; // 用于记录BOSS当前的朝向
     private int a = 0;
 
+    // 引用 BOSS 的 SpriteRenderer 和 PolygonCollider2D
+    private SpriteRenderer spriteRenderer;
+    private PolygonCollider2D polygonCollider;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -37,10 +42,20 @@ public class BossBehaviorController : MonoBehaviour
         // 设置血条的最大值和当前值
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
+
+        // 获取组件
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
+
+        // 初始时更新 Collider 形状
+        UpdateCollider();
     }
 
     void Update()
     {
+        // 每一帧检查并更新 Collider 形状（如果 Sprite 发生了变化）
+        UpdateCollider();
+
         // 计算BOSS和玩家之间的距离
         distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -55,7 +70,8 @@ public class BossBehaviorController : MonoBehaviour
                 // 如果在攻击范围内且BOSS不在攻击中并且冷却结束，开始攻击
                 if (!isAttacking && attackTimer <= 0)
                 {
-                    StartCoroutine(Attack());
+                    //StartCoroutine(Attack());
+                    Attack();
                 }
             }
             else
@@ -121,7 +137,7 @@ public class BossBehaviorController : MonoBehaviour
     }
 
     // BOSS发动攻击
-    IEnumerator Attack()
+    void Attack()
     {
         Debug.Log("Starting Attack"); // 调试信息
 
@@ -138,12 +154,14 @@ public class BossBehaviorController : MonoBehaviour
         isAttacking = true;
 
         // 等待攻击动画完成（假设攻击动画持续2秒）
-        yield return new WaitForSeconds(2.0f);
+        //yield return new WaitForSeconds(2.0f);
 
         // 攻击完成，进入冷却
         attackTimer = attackCooldown;
         isAttacking = false;
         Debug.Log("Attack finished, cooling down"); // 调试信息
+
+        
     }
 
 
@@ -186,6 +204,35 @@ public class BossBehaviorController : MonoBehaviour
 
         isDead = true; // 设置BOSS死亡状态
 
+    }
+
+    // 更新 PolygonCollider2D 形状以匹配当前 Sprite
+    void UpdateCollider()
+    {
+        // 检查是否有 Sprite
+        if (spriteRenderer.sprite == null)
+            return;
+
+        // 重置 PolygonCollider2D 的形状
+        polygonCollider.pathCount = spriteRenderer.sprite.GetPhysicsShapeCount();
+        for (int i = 0; i < polygonCollider.pathCount; i++)
+        {
+            // 获取当前 Sprite 的物理形状并应用到 PolygonCollider2D
+            List<Vector2> shape = new List<Vector2>();
+            spriteRenderer.sprite.GetPhysicsShape(i, shape);
+            polygonCollider.SetPath(i, shape.ToArray());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) // 触发当两个碰撞器碰撞时
+    {
+        Debug.Log("Collision detected");
+        // 当敌人碰撞到玩家时执行
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerHealthController.instance.TakeDamage(damageAmount);
+            //hitCounter = hitWaitTime;
+        }
     }
 
 }

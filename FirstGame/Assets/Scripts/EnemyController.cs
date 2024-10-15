@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) // 触发当两个碰撞器碰撞时
+    private void OnCollisionEnter2D(Collision2D collision) // 玩家收到伤害
     {
         // 当敌人碰撞到玩家时执行
         if (collision.gameObject.tag == "Player" && hitCounter <= 0f)
