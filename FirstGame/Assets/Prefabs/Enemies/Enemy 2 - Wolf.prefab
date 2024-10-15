@@ -115,9 +115,11 @@ MonoBehaviour:
   hitWaitTime: 1
   health: 20
   knockBackTime: 0.5
-  expToGive: 2
+  expToGive: 0
   coinValue: 1
   coinDropRate: 0.5
+  peachHealthValue: 1
+  peachDropRate: 0.5
 --- !u!1 &6884818412498656294
 GameObject:
   m_ObjectHideFlags: 0
