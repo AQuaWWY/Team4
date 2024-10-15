@@ -8,11 +8,18 @@ using UnityEngine.SceneManagement;
 public class UIController : MonoBehaviour
 {
     public static UIController instance;//创建一个静态的UIController实例
-    private void Awake()//在Awake中初始化instance
+    private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-
     public Slider expLvlSlider;//经验条
     public TMP_Text expLvlText;//经验值文本
 
@@ -113,6 +120,9 @@ public class UIController : MonoBehaviour
             Destroy(WeaponManager.instance.gameObject); // 确保当前的 WeaponManager 被销毁
             WeaponManager.instance = null; // 重置实例引用
         }
+
+        levelEndScreen.SetActive(false);//关闭关卡结束面板
+        pauseScreen.SetActive(false);//关闭暂停画布
 
         // 重新加载 wwyScene
         SceneManager.LoadScene("wwyScene");

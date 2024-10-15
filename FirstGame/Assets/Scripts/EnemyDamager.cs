@@ -91,18 +91,7 @@ public class EnemyDamager : MonoBehaviour
             }
             else if (collision.tag == "Boss") // 如果碰撞到的是BOSS
             {
-                // 获取 BossBehaviorController 并调用 TakeDamage 方法
-                BossBehaviorController boss = collision.GetComponent<BossBehaviorController>();
-                if (boss != null)
-                {
-                    //if(BossBehaviorController.instance.isDead)
-                    boss.TakeDamage(damageAmount); // 对BOSS造成伤害
-                }
-
-                // if (destroyOnImpact == true)
-                // {
-                //     Destroy(gameObject);
-                // }
+                BossBehaviorController.instance.TakeDamage(damageAmount); // 调用BOSS的受伤函数
             }
         }
         else

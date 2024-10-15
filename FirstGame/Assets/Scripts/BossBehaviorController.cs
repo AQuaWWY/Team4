@@ -21,6 +21,9 @@ public class BossBehaviorController : MonoBehaviour
     public Slider healthSlider; // 血条Slider
     public float damageAmount = 10f; // BOSS的攻击伤害
 
+    public Collider2D attackCollider; // 攻击碰撞器
+    public Collider2D objectCollider; // 物体碰撞器
+
     private Animator animator; // BOSS的Animator组件
     private float distanceToPlayer; // BOSS与玩家的距离
     private bool isAttacking = false; // 用来判断BOSS是否正在攻击
@@ -95,7 +98,7 @@ public class BossBehaviorController : MonoBehaviour
                 a = 0; // 冷却结束后重置 a
             }
         }
-        currentHealth = currentHealth - 0.01f;
+        //currentHealth = currentHealth - 0.01f;
         healthSlider.value = currentHealth;
 
     }
@@ -147,9 +150,6 @@ public class BossBehaviorController : MonoBehaviour
         // 设置攻击动画
         animator.SetTrigger("Attack");
 
-        //PlayerHealthController.instance.TakeDamage(damageAmount); 
-        // 攻击时对玩家造成10点伤害
-
         // 攻击中，设置isAttacking为true
         isAttacking = true;
 
@@ -161,7 +161,6 @@ public class BossBehaviorController : MonoBehaviour
         isAttacking = false;
         Debug.Log("Attack finished, cooling down"); // 调试信息
 
-        
     }
 
 
@@ -226,12 +225,29 @@ public class BossBehaviorController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) // 触发当两个碰撞器碰撞时
     {
-        Debug.Log("Collision detected");
-        // 当敌人碰撞到玩家时执行
-        if (collision.gameObject.tag == "Player")
+        // 检查碰撞对象是否为 Player
+        if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerHealthController.instance.TakeDamage(damageAmount);
-            //hitCounter = hitWaitTime;
+            // 检查 objectCollider 是否与碰撞对象接触
+            if (objectCollider != null && objectCollider.IsTouching(collision.collider))
+            {
+                Debug.Log("super attack!!!");
+                PlayerHealthController.instance.TakeDamage(damageAmount + 30.0f);
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // 检查碰撞对象是否为 Player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // 检查 attackCollider 是否与碰撞对象接触
+            if (attackCollider != null && attackCollider.IsTouching(collision))
+            {
+                Debug.Log("normal attack!!!");
+                PlayerHealthController.instance.TakeDamage(damageAmount);
+            }
         }
     }
 
