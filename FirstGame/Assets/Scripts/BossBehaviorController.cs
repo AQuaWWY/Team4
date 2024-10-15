@@ -169,6 +169,10 @@ public class BossBehaviorController : MonoBehaviour
     {
         if (isDead) return;  // 确保不会多次调用死亡逻辑
 
+        DamageNumberController.instance.SpawnDamage(damage, transform.position); // 生成伤害数字
+
+        SFXManger.instance.PlaySFXPitch(2); // 敌人受击音效
+
         // 减少生命值
         currentHealth -= damage;
 

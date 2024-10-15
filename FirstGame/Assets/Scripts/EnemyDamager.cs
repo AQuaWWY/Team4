@@ -16,6 +16,7 @@ public class EnemyDamager : MonoBehaviour
     public bool damageOverTime;//是否持续伤害
     public float timeBetweenDamage;//伤害间隔
     private float damageCounter;//伤害计时器
+    private float bossDamageCounter;//伤害计时器
 
     private List<EnemyController> enemiesInRange = new List<EnemyController>();//敌人列表
 
@@ -74,6 +75,17 @@ public class EnemyDamager : MonoBehaviour
                 }
             }
         }
+
+        if (bossDamageCounter > 0)
+        {
+            bossDamageCounter -= Time.deltaTime; // 在每一帧减少计时器
+
+            if (bossDamageCounter <= 0)
+            {
+                BossBehaviorController.instance.TakeDamage(damageAmount); // 对 BOSS 造成伤害
+                bossDamageCounter = timeBetweenDamage; // 重置计时器
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) //触发when两个collider碰撞
@@ -89,26 +101,24 @@ public class EnemyDamager : MonoBehaviour
                     Destroy(gameObject);//销毁物体
                 }
             }
-            else if (collision.tag == "Boss") // 如果碰撞到的是BOSS
+            else if (collision.CompareTag("Boss") && collision == BossBehaviorController.instance.objectCollider) // 如果碰撞到的是BOSS
             {
                 BossBehaviorController.instance.TakeDamage(damageAmount); // 调用BOSS的受伤函数
             }
         }
-        else
+        else // 持续伤害
         {
             if (collision.tag == "Enemy")
             {
                 enemiesInRange.Add(collision.GetComponent<EnemyController>());
             }
-            // else if (collision.tag == "Boss")
-            // {
-            //     // 如果是BOSS，添加到敌人列表进行持续伤害
-            //     BossBehaviorController boss = collision.GetComponent<BossBehaviorController>();
-            //     if (boss != null)
-            //     {
-            //         enemiesInRange.Add(boss);
-            //     }
-            // }
+            else if (collision.CompareTag("Boss") && collision == BossBehaviorController.instance.objectCollider) // 如果碰撞到的是 BOSS
+            {
+                // 将 Boss 的持续伤害逻辑移到 Update 中处理
+                // 只需要在进入碰撞时重置计时器（如果需要）
+                bossDamageCounter = timeBetweenDamage; // 初始化计时器
+
+            }
         }
     }
 
