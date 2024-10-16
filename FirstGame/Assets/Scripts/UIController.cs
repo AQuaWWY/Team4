@@ -138,7 +138,6 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1f; // 恢复游戏
     }
 
-
     public void QuitGame()
     {
         Application.Quit();
