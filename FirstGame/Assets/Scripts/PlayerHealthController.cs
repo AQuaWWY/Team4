@@ -53,6 +53,10 @@ public class PlayerHealthController : MonoBehaviour
 
             Instantiate(deathEffect, transform.position, transform.rotation);//生成死亡特效
 
+            //Time.timeScale = 0;
+
+            WeaponManager.instance.gameObject.SetActive(false);//关闭武器管理器
+
             SFXManger.instance.PlaySFX(6);//死亡音效
         }
 
