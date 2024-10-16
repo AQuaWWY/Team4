@@ -208,6 +208,11 @@ public class BossBehaviorController : MonoBehaviour
         isDead = true; // 设置BOSS死亡状态
 
         LevelManager.instance.Winning(); // 调用UIController的Winning方法
+
+        //Destroy(gameObject, 2.0f); // 2秒后销毁BOSS对象
+        attackCollider.enabled = false; // 关闭攻击碰撞器
+        objectCollider.enabled = false; // 关闭物体碰撞器
+
     }
 
     // 更新 PolygonCollider2D 形状以匹配当前 Sprite
