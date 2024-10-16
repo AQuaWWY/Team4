@@ -129,8 +129,12 @@ public class UIController : MonoBehaviour
         winningScreen.SetActive(false); // 关闭胜利画布
 
         // 重新加载 wwyScene
+        Debug.Log("LoadWWY  !!!");
         SceneManager.LoadScene("wwyScene");
+        Debug.Log("Reset time  !");
         LevelManager.instance.timer = 0f;//重置时间
+        LevelManager.instance.gameActive = true; // 确保游戏重新开始后时间会继续更新
+
         Time.timeScale = 1f; // 恢复游戏
     }
 
