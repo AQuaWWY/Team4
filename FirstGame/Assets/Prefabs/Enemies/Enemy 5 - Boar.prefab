@@ -194,11 +194,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 5693741719611546606}
-  moveSpeed: 1.2
-  damage: 4
+  moveSpeed: 0.5
+  damage: 10
   hitWaitTime: 1
-  health: 30
+  health: 50
   knockBackTime: 0.5
   expToGive: 5
-  coinValue: 1
+  coinValue: 40
   coinDropRate: 0.5
+  peachHealthValue: 50
+  peachDropRate: 0.5

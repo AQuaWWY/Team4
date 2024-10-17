@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
         if (PlayerHealthController.instance.gameObject.activeSelf)//如果玩家处于激活状态（存活）
         {
             //-----------------------------------
-            if (Input.GetKeyDown(KeyCode.N))//检测T键被按下就启动函数扣除伤害
+            if (Input.GetKeyDown(KeyCode.N))
             {
                 GameManager.instance.GotoBossScene();//进入boss场景
             }

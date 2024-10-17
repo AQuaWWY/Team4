@@ -136,6 +136,7 @@ public class UIController : MonoBehaviour
         LevelManager.instance.gameActive = true; // 确保游戏重新开始后时间会继续更新
 
         Time.timeScale = 1f; // 恢复游戏
+        ExperienceLevelController.instance.ResetExperience();//重置经验
     }
 
     public void QuitGame()

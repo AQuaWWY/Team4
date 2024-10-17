@@ -160,4 +160,11 @@ public class ExperienceLevelController : MonoBehaviour
 
         PlayerStatController.instance.UpdateDisplay();//更新显示
     }
+
+    public void ResetExperience()
+    {
+        currentExperience = 0;
+        currentLevel = 1;
+        UIController.instance.UpDateExperience(currentExperience, expLevels[currentLevel], currentLevel);
+    }
 }
