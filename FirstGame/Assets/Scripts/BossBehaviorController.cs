@@ -161,6 +161,7 @@ public class BossBehaviorController : MonoBehaviour
         isAttacking = false;
         Debug.Log("Attack finished, cooling down"); // 调试信息
 
+        SFXManger.instance.PlaySFXPitch(9); // 敌人攻击音效
     }
 
 
@@ -187,6 +188,7 @@ public class BossBehaviorController : MonoBehaviour
             // 播放受击动画
             animator.SetTrigger("TakeHit");
 
+            SFXManger.instance.PlaySFXPitch(10); // 敌人受伤音效
             // 确保 TakeHit 结束后播放死亡动画
             Die();
         }
@@ -194,6 +196,7 @@ public class BossBehaviorController : MonoBehaviour
         {
             // 如果没有死亡，播放普通的受击动画
             animator.SetTrigger("TakeHit");
+            SFXManger.instance.PlaySFXPitch(10); // 敌人受伤音效
         }
     }
 
