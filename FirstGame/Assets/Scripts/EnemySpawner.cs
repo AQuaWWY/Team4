@@ -113,10 +113,10 @@ public class EnemySpawner : MonoBehaviour
             {
                 //添加boss场景
                 //按下N键切换到boss场景
-                if (Input.GetKeyDown(KeyCode.N))//检测T键被按下就启动函数扣除伤害
-                {
+                //if (Input.GetKeyDown(KeyCode.N))
+                //{
                     GameManager.instance.GotoBossScene();//进入boss场景
-                }
+                //}
             }
         }
 

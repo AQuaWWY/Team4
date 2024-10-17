@@ -37,6 +37,10 @@ public class BossBehaviorController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private PolygonCollider2D polygonCollider;
 
+    private float startTime; // 记录开始时间
+    private bool delayStarted = false;
+    private bool once = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -52,55 +56,81 @@ public class BossBehaviorController : MonoBehaviour
 
         // 初始时更新 Collider 形状
         UpdateCollider();
+
+        // 在 Start 方法中初始化或根据需要的逻辑设置
+        //StartDelay(); // 调用开始延迟的逻辑
     }
 
     void Update()
     {
-        // 每一帧检查并更新 Collider 形状（如果 Sprite 发生了变化）
-        UpdateCollider();
-
-        // 计算BOSS和玩家之间的距离
-        distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        // 始终面向玩家
-        FacePlayer();
-
-        // 如果BOSS未死亡且不在攻击中，处理BOSS的移动和攻击逻辑
-        if (!isDead)
+        if(once == false)
         {
-            if (distanceToPlayer < attackRange)
-            {
-                // 如果在攻击范围内且BOSS不在攻击中并且冷却结束，开始攻击
-                if (!isAttacking && attackTimer <= 0)
-                {
-                    //StartCoroutine(Attack());
-                    Attack();
-                }
-            }
-            else
-            {
-                // 如果不在攻击范围内，且BOSS不在攻击中，移动到玩家位置
-                if (!isAttacking)
-                {
-                    MoveTowardsPlayer();
-                }
-            }
+            StartDelay();
+            once = true;
+        }
 
-            // 更新攻击冷却计时器
-            if (attackTimer > 0)
+        // 在 Start 方法中初始化或根据需要的逻辑设置
+        //StartDelay(); // 调用开始延迟的逻辑
+
+        if (delayStarted)
+        {
+            // 检查当前时间与开始时间的差值是否达到2秒
+            if (Time.time - startTime >= 2.0f)
             {
-                a = 1; // 冷却中，将 a 设置为 1
-                attackTimer -= Time.deltaTime;
-            }
-            else if (attackTimer <= 0 && a == 1)
-            {
-                Debug.Log("Cool down finished");
-                a = 0; // 冷却结束后重置 a
+                Debug.Log("Boss can start moving now.");
+                delayStarted = false; // 延迟完成，停止检查
+                // 可以在这里执行让 BOSS 开始移动的逻辑
             }
         }
-        //currentHealth = currentHealth - 0.01f;
-        healthSlider.value = currentHealth;
 
+        else
+        {
+
+            // 每一帧检查并更新 Collider 形状（如果 Sprite 发生了变化）
+            UpdateCollider();
+
+            // 计算BOSS和玩家之间的距离
+            distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+            // 始终面向玩家
+            FacePlayer();
+
+            // 如果BOSS未死亡且不在攻击中，处理BOSS的移动和攻击逻辑
+            if (!isDead)
+            {
+                if (distanceToPlayer < attackRange)
+                {
+                    // 如果在攻击范围内且BOSS不在攻击中并且冷却结束，开始攻击
+                    if (!isAttacking && attackTimer <= 0)
+                    {
+                        //StartCoroutine(Attack());
+                        Attack();
+                    }
+                }
+                else
+                {
+                    // 如果不在攻击范围内，且BOSS不在攻击中，移动到玩家位置
+                    if (!isAttacking)
+                    {
+                        MoveTowardsPlayer();
+                    }
+                }
+
+                // 更新攻击冷却计时器
+                if (attackTimer > 0)
+                {
+                    a = 1; // 冷却中，将 a 设置为 1
+                    attackTimer -= Time.deltaTime;
+                }
+                else if (attackTimer <= 0 && a == 1)
+                {
+                    Debug.Log("Cool down finished");
+                    a = 0; // 冷却结束后重置 a
+                }
+            }
+            //currentHealth = currentHealth - 0.01f;
+            healthSlider.value = currentHealth;
+        }
     }
 
     // BOSS移动到玩家位置
@@ -264,4 +294,11 @@ public class BossBehaviorController : MonoBehaviour
         }
     }
 
+    void StartDelay()
+    {
+        
+        startTime = Time.time; // 记录当前时间
+        Debug.Log("Recorded start time: " + startTime);
+        delayStarted = true; // 标记延迟已经开始
+    }
 }
