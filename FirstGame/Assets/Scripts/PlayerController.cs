@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public JoystickController joystick;  // 摇杆引用
     public float moveSpeed;
 
     public float pickupRange = 1.5f;
@@ -60,6 +61,21 @@ public class PlayerController : MonoBehaviour
         moveInput.Normalize();//保持斜向速度一致
 
         transform.position += moveInput * moveSpeed * Time.deltaTime;//坐标加移动 deltaTime:帧数越高，数值越小，使所有玩家都有相同的移动速度
+
+        // 检查 joystick 是否正确赋值
+        if (joystick == null)
+        {
+            Debug.LogError("JoystickController is not assigned.");
+            return;
+        }
+
+        // 获取摇杆的输入
+        float moveX = joystick.GetHorizontal();
+        float moveY = joystick.GetVertical();
+
+        // 让角色根据输入移动
+        Vector3 movement = new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
+        transform.Translate(movement, Space.World);
     }
 
     //将武器列表中的一个武器放入到注册武器中，只用于第一次随机武器
