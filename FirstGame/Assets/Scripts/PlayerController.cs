@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         float moveY = joystick.GetVertical();
 
         // 让角色根据输入移动
-        Vector3 movement = new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
+        Vector3 movement = new Vector3(moveX, moveY, 0) * moveSpeed * 1.5f * Time.deltaTime;
         transform.Translate(movement, Space.World);
     }
 

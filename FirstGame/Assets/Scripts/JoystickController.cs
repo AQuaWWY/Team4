@@ -7,16 +7,21 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     private RectTransform joystickHandle;      // 摇杆可拖动的前景
     private Vector2 inputVector;               // 输入向量
 
-    // public JoystickController instance;
+    public static JoystickController instance;  // 单例实例
 
-    // private void Awake()
-    // {
-    //     if (instance == null)
-    //     {
-    //         instance = this;
-    //     }
-    // }
-
+    private void Awake()
+    {
+        // 确保只存在一个实例
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     private void Start()
     {
         // 获取 RectTransform 组件

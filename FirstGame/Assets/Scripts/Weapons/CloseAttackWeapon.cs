@@ -7,6 +7,7 @@ public class CloseAttackWeapon : Weapon
     public EnemyDamager damager;
 
     private float attackCounter, direction;
+    private float joystickX;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,9 @@ public class CloseAttackWeapon : Weapon
 
             direction = Input.GetAxisRaw("Horizontal");
 
+            // 获取摇杆输入
+            joystickX = JoystickController.instance.GetHorizontal();
+
             if (direction != 0)//水平输入是否为零AD键
             {
                 if (direction > 0)//D
@@ -40,6 +44,17 @@ public class CloseAttackWeapon : Weapon
                 else//A
                 {
                     damager.transform.rotation = Quaternion.Euler(0f, 0f, 180f);//武器旋转180度
+                }
+            }
+            else if (joystickX != 0)//摇杆输入
+            {
+                if (joystickX > 0)
+                {
+                    damager.transform.rotation = Quaternion.identity;
+                }
+                else
+                {
+                    damager.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
                 }
             }
 
