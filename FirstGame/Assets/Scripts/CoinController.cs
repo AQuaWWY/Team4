@@ -7,6 +7,10 @@ public class CoinController : MonoBehaviour
 {
     public static CoinController instance;
 
+    public int currentCoins;
+
+    public CoinPickup coin;
+
     private void Awake()
     {
         // 确保只有一个 CoinController 实例
@@ -41,10 +45,6 @@ public class CoinController : MonoBehaviour
         }
     }
 
-    public int currentCoins;
-
-    public CoinPickup coin;
-
     public void AddCoins(int coinsToAdd)
     {
         currentCoins += coinsToAdd;
@@ -63,6 +63,12 @@ public class CoinController : MonoBehaviour
     {
         currentCoins -= coinsToSpend;
 
+        UIController.instance.UpDateCoins();
+    }
+
+    public void ResetCoins()
+    {
+        currentCoins = 0;
         UIController.instance.UpDateCoins();
     }
 }

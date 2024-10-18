@@ -137,6 +137,7 @@ public class UIController : MonoBehaviour
 
         Time.timeScale = 1f; // 恢复游戏
         ExperienceLevelController.instance.ResetExperience();//重置经验
+        CoinController.instance.ResetCoins();//重置金币
     }
 
     public void QuitGame()
