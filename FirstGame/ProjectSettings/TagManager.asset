@@ -3,9 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-  - Boss
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -13,8 +11,6 @@ TagManager:
   - 
   - Water
   - UI
-  - Enemy
-  - Pickups
   - 
   - 
   - 
@@ -29,7 +25,9 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Layer 1
+  - Layer 2
+  - Layer 3
   - 
   - 
   - 
@@ -40,24 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: BG
-    uniqueID: 430892351
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Enemy
-    uniqueID: 1390887721
+  - name: Layer 1
+    uniqueID: 2425651459
     locked: 0
-  - name: Pickups
-    uniqueID: 3426493145
+  - name: Layer 2
+    uniqueID: 4250941897
     locked: 0
-  - name: Weapons
-    uniqueID: 2754564443
-    locked: 0
-  - name: Player
-    uniqueID: 1879537603
-    locked: 0
-  - name: UI
-    uniqueID: 3098174427
+  - name: Layer 3
+    uniqueID: 4189426099
     locked: 0
