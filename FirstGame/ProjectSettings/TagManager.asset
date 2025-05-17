@@ -14,7 +14,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -43,12 +43,30 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Layer 1
+  - name: Background
     uniqueID: 2425651459
     locked: 0
-  - name: Layer 2
+  - name: BGDecorate
     uniqueID: 4250941897
     locked: 0
-  - name: Layer 3
+  - name: DropItem
     uniqueID: 4189426099
+    locked: 0
+  - name: Enemy
+    uniqueID: 3335987199
+    locked: 0
+  - name: BuffEffect
+    uniqueID: 3167019311
+    locked: 0
+  - name: Player
+    uniqueID: 3744670537
+    locked: 0
+  - name: Weapon
+    uniqueID: 3713294625
+    locked: 0
+  - name: UI_Overhead
+    uniqueID: 3611639293
+    locked: 0
+  - name: UI_Front
+    uniqueID: 3330336589
     locked: 0

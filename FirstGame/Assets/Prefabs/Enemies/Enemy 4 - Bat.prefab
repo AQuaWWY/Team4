@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6623219282938682592}
   - component: {fileID: 6752301261106262951}
   - component: {fileID: 5511650909716898047}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy 4 - Bat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3924305894273500354}
   - component: {fileID: 4031995880318551859}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,8 +190,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -44025399
-  m_SortingLayer: 2
+  m_SortingLayerID: -958980097
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 353891352, guid: fca6896e7b4fa624eafb2e949abf555e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

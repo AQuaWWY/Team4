@@ -51,7 +51,8 @@ public class PlayerHealthController : MonoBehaviour
 
             LevelManager.instance.EndLevel();//end the level
 
-            Instantiate(deathEffect, transform.position, transform.rotation);//生成死亡特效
+            GameObject effect = Instantiate(deathEffect, transform.position, transform.rotation); // 生成死亡特效
+            effect.GetComponent<Renderer>().sortingLayerName = "Player"; // 设置Sorting Layer
 
             //Time.timeScale = 0;
 

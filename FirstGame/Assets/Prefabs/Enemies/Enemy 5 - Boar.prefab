@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5976721377346777548}
   - component: {fileID: 1200305480134162147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -44025399
-  m_SortingLayer: 2
+  m_SortingLayerID: -958980097
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 1729914940, guid: 6651c15c1cf3383468f92a5009e596d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3394263704381878717}
   - component: {fileID: 5693741719611546606}
   - component: {fileID: 1864854447879910053}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy 5 - Boar
   m_TagString: Enemy
   m_Icon: {fileID: 0}

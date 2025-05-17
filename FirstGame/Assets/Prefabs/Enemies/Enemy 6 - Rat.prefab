@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3216694508155801373}
   - component: {fileID: 6059601124067295114}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -44025399
-  m_SortingLayer: 2
+  m_SortingLayerID: -958980097
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -1964336950, guid: 2090d1de3e60ce847a05d9add4d0158d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6070890113820769756}
   - component: {fileID: 7717270276636025455}
   - component: {fileID: 1699101001949150504}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy 6 - Rat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
