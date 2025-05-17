@@ -74,7 +74,7 @@ public class UIController : MonoBehaviour
 
     public void UpDateCoins()
     {
-        coinText.text = "Coins: " + CoinController.instance.currentCoins;//设置金币文本
+        coinText.text = ""+CoinController.instance.currentCoins;//设置金币文本
     }
 
     public void PurchaseMoveSpeed()
