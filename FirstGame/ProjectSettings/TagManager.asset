@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Boss
+  - Pickup
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Pickup
   - Enemy
   - 
   - 
@@ -49,7 +50,7 @@ TagManager:
   - name: BGDecorate
     uniqueID: 4250941897
     locked: 0
-  - name: DropItem
+  - name: Pickup
     uniqueID: 4189426099
     locked: 0
   - name: Enemy
