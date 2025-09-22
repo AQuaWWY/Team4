@@ -50,6 +50,9 @@ TagManager:
   - name: BGDecorate
     uniqueID: 4250941897
     locked: 0
+  - name: LightRing
+    uniqueID: 1054275719
+    locked: 0
   - name: Pickup
     uniqueID: 4189426099
     locked: 0
