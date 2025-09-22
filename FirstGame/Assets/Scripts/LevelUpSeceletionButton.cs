@@ -24,8 +24,8 @@ public class LevelUpSelectionButton : MonoBehaviour
         {
             upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;
             weaponIcon.sprite = theWeapon.icon;
-
-            nameLevelText.text = theWeapon.name + " LV " + theWeapon.weaponLevel++;
+            int displayLevel = theWeapon.weaponLevel + 1;
+            nameLevelText.text = theWeapon.name + " LV " + displayLevel;
         }
         else//未启用的武器，先要解锁
         {
