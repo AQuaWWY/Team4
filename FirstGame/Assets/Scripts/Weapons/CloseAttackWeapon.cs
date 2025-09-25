@@ -33,7 +33,7 @@ public class CloseAttackWeapon : Weapon
             direction = Input.GetAxisRaw("Horizontal");
 
             // 获取摇杆输入
-            //joystickX = JoystickController.instance.GetHorizontal();
+            joystickX = JoystickController.instance.GetHorizontal();
 
             if (direction != 0)//水平输入是否为零AD键
             {
